@@ -87,12 +87,10 @@ const Header: React.FC = () => {
           )}
           
           <a
-            href="https://yourportfolio.com"
-            target="_blank"
-            rel="noopener noreferrer"
+            href="mailto:sanathkumar.data@gmail.com"
             className="inline-flex items-center px-4 py-2 rounded-full bg-primary text-primary-foreground text-sm font-medium transition-all hover:bg-primary/90 active:scale-95"
           >
-            Wanna Hire Me
+            Contact Me
           </a>
         </div>
       </div>

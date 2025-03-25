@@ -22,7 +22,7 @@ const Home: React.FC = () => {
               Thoughts, stories and ideas
             </h1>
             <p className="text-xl text-muted-foreground mb-10 animate-fade-in" style={{ animationDelay: '200ms' }}>
-              A minimalist blog platform designed for clarity and readability, featuring the latest insights on web development and automation.
+              This blog tells you about Data and AI automation, featuring insights on machine learning, data science, and automated workflows.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center animate-fade-in" style={{ animationDelay: '300ms' }}>
               <Link
@@ -31,14 +31,6 @@ const Home: React.FC = () => {
               >
                 Explore Articles
               </Link>
-              <a
-                href="https://yourportfolio.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center justify-center px-6 py-3 rounded-full bg-secondary text-secondary-foreground font-medium transition-all hover:bg-secondary/70 active:scale-95"
-              >
-                Visit Portfolio
-              </a>
             </div>
           </div>
         </section>

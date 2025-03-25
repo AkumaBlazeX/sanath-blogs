@@ -1,6 +1,7 @@
 
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { Linkedin, Github } from 'lucide-react';
 
 const Footer: React.FC = () => {
   const currentYear = new Date().getFullYear();
@@ -14,7 +15,7 @@ const Footer: React.FC = () => {
               ModernBlog
             </Link>
             <p className="text-muted-foreground">
-              A minimal and elegant blog platform showcasing modern web development techniques.
+              This blog tells you about Data and AI automation, featuring insights on machine learning, data science, and automated workflows.
             </p>
           </div>
 
@@ -31,16 +32,6 @@ const Footer: React.FC = () => {
                   Blog
                 </Link>
               </li>
-              <li>
-                <a 
-                  href="https://yourportfolio.com" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="text-muted-foreground hover:text-foreground transition-colors"
-                >
-                  Portfolio
-                </a>
-              </li>
             </ul>
           </div>
 
@@ -49,31 +40,35 @@ const Footer: React.FC = () => {
             <ul className="space-y-3">
               <li>
                 <a 
-                  href="mailto:hello@example.com" 
+                  href="mailto:sanathkumar.data@gmail.com" 
                   className="text-muted-foreground hover:text-foreground transition-colors"
                 >
-                  hello@example.com
+                  sanathkumar.data@gmail.com
                 </a>
               </li>
               <li>
-                <a 
-                  href="https://twitter.com/example" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="text-muted-foreground hover:text-foreground transition-colors"
-                >
-                  Twitter
-                </a>
-              </li>
-              <li>
-                <a 
-                  href="https://github.com/example" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="text-muted-foreground hover:text-foreground transition-colors"
-                >
-                  GitHub
-                </a>
+                <div className="flex space-x-4">
+                  <a 
+                    href="https://linkedin.com/in/yourusername" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="text-muted-foreground hover:text-foreground transition-colors flex items-center"
+                    aria-label="LinkedIn"
+                  >
+                    <Linkedin className="h-5 w-5 mr-2" />
+                    <span>LinkedIn</span>
+                  </a>
+                  <a 
+                    href="https://github.com/yourusername" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="text-muted-foreground hover:text-foreground transition-colors flex items-center"
+                    aria-label="GitHub"
+                  >
+                    <Github className="h-5 w-5 mr-2" />
+                    <span>GitHub</span>
+                  </a>
+                </div>
               </li>
             </ul>
           </div>
