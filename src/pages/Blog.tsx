@@ -3,10 +3,13 @@ import React, { useState } from 'react';
 import BlogCard from '../components/BlogCard';
 import PageTransition from '../components/PageTransition';
 import blogPosts from '../data/blogPosts.json';
+import { Pagination, PaginationContent, PaginationEllipsis, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from "@/components/ui/pagination";
 
 const Blog: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedTag, setSelectedTag] = useState<string | null>(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const postsPerPage = 6;
   
   // Extract all unique tags from blog posts
   const allTags = Array.from(
@@ -27,6 +30,102 @@ const Blog: React.FC = () => {
     return matchesSearch && matchesTag;
   });
 
+  // Calculate pagination values
+  const totalPages = Math.ceil(filteredPosts.length / postsPerPage);
+  const indexOfLastPost = currentPage * postsPerPage;
+  const indexOfFirstPost = indexOfLastPost - postsPerPage;
+  const currentPosts = filteredPosts.slice(indexOfFirstPost, indexOfLastPost);
+  
+  // Handle page change
+  const handlePageChange = (pageNumber: number) => {
+    setCurrentPage(pageNumber);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  // Generate page links
+  const renderPageLinks = () => {
+    const pageLinks = [];
+    
+    // First page
+    pageLinks.push(
+      <PaginationItem key="first">
+        <PaginationLink 
+          isActive={currentPage === 1}
+          onClick={() => handlePageChange(1)}
+        >
+          1
+        </PaginationLink>
+      </PaginationItem>
+    );
+    
+    // Ellipsis if needed
+    if (currentPage > 3) {
+      pageLinks.push(
+        <PaginationItem key="ellipsis-start">
+          <PaginationEllipsis />
+        </PaginationItem>
+      );
+    }
+    
+    // Pages before current
+    if (currentPage > 2) {
+      pageLinks.push(
+        <PaginationItem key={currentPage - 1}>
+          <PaginationLink onClick={() => handlePageChange(currentPage - 1)}>
+            {currentPage - 1}
+          </PaginationLink>
+        </PaginationItem>
+      );
+    }
+    
+    // Current page (if not 1)
+    if (currentPage !== 1 && currentPage !== totalPages) {
+      pageLinks.push(
+        <PaginationItem key={currentPage}>
+          <PaginationLink isActive onClick={() => handlePageChange(currentPage)}>
+            {currentPage}
+          </PaginationLink>
+        </PaginationItem>
+      );
+    }
+    
+    // Pages after current
+    if (currentPage < totalPages - 1) {
+      pageLinks.push(
+        <PaginationItem key={currentPage + 1}>
+          <PaginationLink onClick={() => handlePageChange(currentPage + 1)}>
+            {currentPage + 1}
+          </PaginationLink>
+        </PaginationItem>
+      );
+    }
+    
+    // Ellipsis if needed
+    if (currentPage < totalPages - 2) {
+      pageLinks.push(
+        <PaginationItem key="ellipsis-end">
+          <PaginationEllipsis />
+        </PaginationItem>
+      );
+    }
+    
+    // Last page (if not already shown)
+    if (totalPages > 1) {
+      pageLinks.push(
+        <PaginationItem key="last">
+          <PaginationLink 
+            isActive={currentPage === totalPages}
+            onClick={() => handlePageChange(totalPages)}
+          >
+            {totalPages}
+          </PaginationLink>
+        </PaginationItem>
+      );
+    }
+    
+    return pageLinks;
+  };
+
   return (
     <PageTransition>
       <div className="container-custom">
@@ -44,7 +143,10 @@ const Blog: React.FC = () => {
                 type="text"
                 placeholder="Search articles..."
                 value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
+                onChange={(e) => {
+                  setSearchTerm(e.target.value);
+                  setCurrentPage(1); // Reset to page 1 on search
+                }}
                 className="w-full px-4 py-3 pl-10 rounded-full border border-border bg-card focus:outline-none focus:ring-2 focus:ring-primary/20"
               />
               <svg 
@@ -61,7 +163,10 @@ const Blog: React.FC = () => {
             {/* Tags */}
             <div className="flex flex-wrap justify-center gap-2 mb-8">
               <button
-                onClick={() => setSelectedTag(null)}
+                onClick={() => {
+                  setSelectedTag(null);
+                  setCurrentPage(1); // Reset to page 1 on tag change
+                }}
                 className={`px-3 py-1 rounded-full text-sm ${
                   selectedTag === null
                     ? 'bg-primary text-primary-foreground'
@@ -74,7 +179,10 @@ const Blog: React.FC = () => {
               {allTags.map(tag => (
                 <button
                   key={tag}
-                  onClick={() => setSelectedTag(tag)}
+                  onClick={() => {
+                    setSelectedTag(tag);
+                    setCurrentPage(1); // Reset to page 1 on tag change
+                  }}
                   className={`px-3 py-1 rounded-full text-sm ${
                     selectedTag === tag
                       ? 'bg-primary text-primary-foreground'
@@ -90,22 +198,47 @@ const Blog: React.FC = () => {
         
         {/* Blog Posts Grid */}
         <section className="py-8">
-          {filteredPosts.length > 0 ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {filteredPosts.map((post, index) => (
-                <div key={post.id} className="animate-fade-in" style={{ animationDelay: `${index * 50}ms` }}>
-                  <BlogCard
-                    id={post.id}
-                    title={post.title}
-                    summary={post.summary}
-                    date={post.date}
-                    imageUrl={post.imageUrl}
-                    slug={post.slug}
-                    tags={post.tags}
-                  />
+          {currentPosts.length > 0 ? (
+            <>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {currentPosts.map((post, index) => (
+                  <div key={post.id} className="animate-fade-in" style={{ animationDelay: `${index * 50}ms` }}>
+                    <BlogCard
+                      id={post.id}
+                      title={post.title}
+                      summary={post.summary}
+                      date={post.date}
+                      imageUrl={post.imageUrl}
+                      slug={post.slug}
+                      tags={post.tags}
+                    />
+                  </div>
+                ))}
+              </div>
+              
+              {/* Pagination */}
+              {totalPages > 1 && (
+                <div className="mt-12">
+                  <Pagination>
+                    <PaginationContent>
+                      {currentPage > 1 && (
+                        <PaginationItem>
+                          <PaginationPrevious onClick={() => handlePageChange(currentPage - 1)} />
+                        </PaginationItem>
+                      )}
+                      
+                      {renderPageLinks()}
+                      
+                      {currentPage < totalPages && (
+                        <PaginationItem>
+                          <PaginationNext onClick={() => handlePageChange(currentPage + 1)} />
+                        </PaginationItem>
+                      )}
+                    </PaginationContent>
+                  </Pagination>
                 </div>
-              ))}
-            </div>
+              )}
+            </>
           ) : (
             <div className="py-20 text-center">
               <h3 className="text-xl font-medium mb-2">No posts found</h3>
