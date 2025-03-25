@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useTheme } from 'next-themes';
-import { Moon, Sun, Monitor } from 'lucide-react';
+import { Moon, Sun, Monitor, Mail } from 'lucide-react';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -90,6 +90,7 @@ const Header: React.FC = () => {
             href="mailto:sanathkumar.data@gmail.com"
             className="inline-flex items-center px-4 py-2 rounded-full bg-primary text-primary-foreground text-sm font-medium transition-all hover:bg-primary/90 active:scale-95"
           >
+            <Mail className="mr-2 h-4 w-4" />
             Contact Me
           </a>
         </div>
