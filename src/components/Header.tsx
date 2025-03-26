@@ -38,7 +38,7 @@ const Header: React.FC = () => {
   return (
     <header 
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled ? 'py-4 bg-background/80 backdrop-blur-lg shadow-subtle' : 'py-6 bg-transparent'
+        scrolled ? 'py-4 glass shadow-subtle' : 'py-6 bg-transparent'
       }`}
     >
       <div className="container-custom flex items-center justify-between">
@@ -62,14 +62,14 @@ const Header: React.FC = () => {
           {mounted && (
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button variant="outline" size="icon" className="h-9 w-9">
+                <Button variant="outline" size="icon" className="h-9 w-9 glass-button">
                   {theme === 'light' ? <Sun className="h-4 w-4" /> : 
                    theme === 'dark' ? <Moon className="h-4 w-4" /> : 
                    <Monitor className="h-4 w-4" />}
                   <span className="sr-only">Toggle theme</span>
                 </Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="end">
+              <DropdownMenuContent align="end" className="glass-card">
                 <DropdownMenuItem onClick={() => setTheme("light")}>
                   <Sun className="mr-2 h-4 w-4" />
                   <span>Light</span>
@@ -88,7 +88,7 @@ const Header: React.FC = () => {
           
           <a
             href="mailto:sanathkumar.data@gmail.com"
-            className="inline-flex items-center px-4 py-2 rounded-full bg-primary text-primary-foreground text-sm font-medium transition-all hover:bg-primary/90 active:scale-95"
+            className="inline-flex items-center px-4 py-2 rounded-full glass-button text-foreground text-sm font-medium transition-all hover:bg-white/30 active:scale-95"
           >
             <Mail className="mr-2 h-4 w-4" />
             Contact Me

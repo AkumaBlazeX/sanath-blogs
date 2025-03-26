@@ -100,7 +100,7 @@ const Subscribe = () => {
   };
 
   return (
-    <div className="w-full py-12 md:py-16 bg-card border-y border-border/30">
+    <div className="w-full py-12 md:py-16 glass">
       <div className="container-custom">
         <div className="max-w-3xl mx-auto text-center">
           <h2 className="text-2xl md:text-3xl font-bold mb-4">
@@ -140,13 +140,13 @@ const Subscribe = () => {
                   value={email}
                   onChange={handleChange}
                   placeholder="Your email address"
-                  className="pl-10 h-12"
+                  className="pl-10 h-12 glass-card bg-transparent"
                   required
                 />
               </div>
               <Button 
                 type="submit" 
-                className="h-12 px-6" 
+                className="h-12 px-6 glass-button" 
                 disabled={isSubmitting || !isConfigured}
               >
                 {isSubmitting ? (

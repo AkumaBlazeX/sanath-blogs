@@ -3,7 +3,6 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import BlogCard from '../components/BlogCard';
 import PageTransition from '../components/PageTransition';
-import Subscribe from '../components/Subscribe';
 import blogPosts from '../data/blogPosts.json';
 
 const Home: React.FC = () => {
@@ -58,9 +57,6 @@ const Home: React.FC = () => {
             />
           </div>
         </section>
-
-        {/* Subscription Section */}
-        <Subscribe />
 
         {/* Recent Posts Section */}
         <section className="py-12">
