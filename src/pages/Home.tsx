@@ -16,7 +16,7 @@ const Home: React.FC = () => {
         <section className="py-20 md:py-32">
           <div className="max-w-4xl mx-auto text-center">
             <span className="inline-block px-3 py-1 mb-6 text-sm font-medium rounded-full bg-primary/10 text-primary animate-fade-in">
-              Modern Blog Platform
+              Data Science & AI Insights
             </span>
             <h1 className="text-4xl md:text-6xl font-bold tracking-tight mb-6 animate-fade-in" style={{ animationDelay: '100ms' }}>
               Thoughts, stories and ideas
