@@ -1,53 +1,57 @@
-
 [
   {
     "id": 1,
     "title": "Automating Content Publishing with n8n and GitHub",
     "summary": "Learn how to set up a workflow that automatically publishes markdown content to your GitHub repo using n8n's powerful automation features.",
-    "date": "June 15, 2023",
-    "imageUrl": "https://images.unsplash.com/photo-1558494949-ef010cbdcc31",
+    "date": "March 30, 2025",
+    "imageUrl": "/src/Images/1.png",
     "slug": "automating-content-publishing",
     "tags": ["Automation", "GitHub", "n8n", "Workflow"],
-    "content": "<p>One of the biggest challenges content creators face is the publishing process. Moving content from draft to published can involve multiple steps, approvals, and platforms. This is where automation tools like n8n come in.</p><h2>What is n8n?</h2><p>n8n is a fair-code licensed workflow automation tool that allows you to connect different services and automate tasks between them. Think of it as the glue between your various applications and services.</p><h2>Setting Up Your GitHub Repository</h2><p>Before we dive into n8n, you'll need a GitHub repository that will host your content. This could be a dedicated content repository or part of your existing website repository.</p><h2>Creating the n8n Workflow</h2><p>Once you have your repository set up, you can create an n8n workflow that:</p><ul><li>Watches for new content in a specific location (like a Google Drive folder or a Notion database)</li><li>Formats the content as needed</li><li>Commits the new content to your GitHub repository</li></ul><p>The beauty of this setup is that once configured, it runs automatically in the background, requiring no manual intervention.</p><h2>Benefits of Automated Publishing</h2><p>By automating your content publishing process:</p><ol><li>You reduce the chance of human error</li><li>You save time that would otherwise be spent on repetitive tasks</li><li>You create a consistent publishing schedule</li><li>You can focus more on creating quality content</li></ol><p>If you're managing a blog or documentation site, this automation can be a game-changer for your workflow.</p>"
+    "content": "<p>One of the biggest challenges content creators face is the publishing process... (content truncated for brevity)</p>",
+    "targetAudience": ["Data Engineers", "AI Engineers"]
   },
   {
     "id": 2,
-    "title": "Building a Serverless API with AWS Lambda and API Gateway",
-    "summary": "Explore how to create scalable, cost-effective APIs using AWS Lambda functions and API Gateway, with practical examples and deployment tips.",
-    "date": "July 3, 2023",
-    "imageUrl": "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d",
-    "slug": "serverless-api-aws-lambda",
-    "tags": ["AWS", "Serverless", "API", "Lambda"],
-    "content": "<p>Serverless computing has revolutionized how we build and deploy backend services. Instead of managing servers, you can focus on writing code that responds to events.</p><h2>What is AWS Lambda?</h2><p>AWS Lambda is a serverless compute service that runs your code in response to events and automatically manages the underlying compute resources for you.</p><h2>Setting Up API Gateway</h2><p>API Gateway acts as the front door for your API, routing incoming requests to the appropriate Lambda functions. Here's how to set it up effectively:</p><ul><li>Create a new API in the API Gateway console</li><li>Define your resources and methods</li><li>Connect each method to a Lambda function</li><li>Configure request/response mapping templates</li></ul><h2>Writing Your First Lambda Function</h2><p>Let's look at a simple Lambda function that returns a list of items:</p><pre><code>exports.handler = async (event) => {<br>  const items = [<br>    { id: 1, name: 'Item 1' },<br>    { id: 2, name: 'Item 2' },<br>    { id: 3, name: 'Item 3' }<br>  ];<br><br>  return {<br>    statusCode: 200,<br>    body: JSON.stringify(items)<br>  };<br>};</code></pre><h2>Deploying and Testing</h2><p>Once you've written your Lambda functions and configured API Gateway, it's time to deploy your API. API Gateway makes this easy with stages and deployment features.</p><p>After deployment, you can test your API using tools like Postman or directly in a web browser for GET requests.</p><h2>Benefits of Serverless APIs</h2><p>Serverless APIs offer numerous advantages:</p><ol><li>No server management required</li><li>Pay-per-use pricing model</li><li>Automatic scaling based on demand</li><li>Built-in high availability</li></ol><p>For many applications, especially those with variable or unpredictable traffic, serverless can be both more economical and easier to manage than traditional server-based deployments.</p>"
+    "title": "How AI Agents Can Simplify Your Daily Tasks",
+    "summary": "Explore how AI agents can automate email sorting, calendar management, and content creation, saving you hours of manual effort.",
+    "date": "March 30, 2025",
+    "imageUrl": "/src/Images/2.png",
+    "slug": "ai-agents-daily-tasks",
+    "tags": ["AI", "Automation", "Productivity"],
+    "content": "<p>AI agents are becoming increasingly popular for streamlining everyday tasks... (content truncated for brevity)</p>",
+    "targetAudience": ["Tech Enthusiasts", "Working Professionals"]
   },
   {
     "id": 3,
-    "title": "Modern CSS Techniques for Better Responsive Designs",
-    "summary": "Discover the latest CSS features like Grid, Custom Properties, and Container Queries that are transforming how we build responsive websites.",
-    "date": "August 12, 2023",
-    "imageUrl": "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158",
-    "slug": "modern-css-responsive-design",
-    "tags": ["CSS", "Web Design", "Responsive", "Frontend"],
-    "content": "<p>Responsive web design has evolved significantly since Ethan Marcotte first coined the term in 2010. Modern CSS provides powerful tools that make creating responsive layouts easier and more intuitive than ever before.</p><h2>CSS Grid Layout</h2><p>Grid Layout is a two-dimensional system that revolutionizes how we approach page layouts:</p><pre><code>.grid-container {<br>  display: grid;<br>  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));<br>  gap: 20px;<br>}</code></pre><p>This simple code creates a responsive grid where columns automatically adjust based on available space. No media queries needed!</p><h2>Custom Properties (CSS Variables)</h2><p>Custom properties allow you to define reusable values that can be changed dynamically:</p><pre><code>:root {<br>  --main-color: #3498db;<br>  --spacing-unit: 16px;<br>}<br><br>@media (min-width: 768px) {<br>  :root {<br>    --spacing-unit: 24px;<br>  }<br>}</code></pre><h2>Container Queries</h2><p>While still gaining browser support, container queries represent the future of component-based responsive design:</p><pre><code>.card-container {<br>  container-type: inline-size;<br>}<br><br>@container (min-width: 400px) {<br>  .card-title {<br>    font-size: 1.5rem;<br>  }<br>}</code></pre><p>Unlike media queries that look at the viewport size, container queries respond to the size of a containing element.</p><h2>Fluid Typography with clamp()</h2><p>The clamp() function creates fluid typography that scales smoothly between minimum and maximum sizes:</p><pre><code>h1 {<br>  font-size: clamp(1.5rem, 5vw, 3rem);<br>}</code></pre><h2>Putting It All Together</h2><p>These modern CSS techniques can be combined to create incredibly flexible layouts that adapt to any device or container size. The days of writing dozens of media queries and managing breakpoints manually are coming to an end.</p><p>By embracing these modern approaches, you can create designs that are not only responsive but also more maintainable and adaptable to changing requirements.</p>"
+    "title": "Building a RAG System for Smarter AI Responses",
+    "summary": "Discover the steps to build a powerful RAG system that combines search and generative AI for more accurate and context-aware results.",
+    "date": "March 30, 2025",
+    "imageUrl": "/src/Images/3.png",
+    "slug": "building-rag-system",
+    "tags": ["AI", "RAG", "Machine Learning"],
+    "content": "<p>Retrieval-Augmented Generation (RAG) is revolutionizing the way AI systems... (content truncated for brevity)</p>",
+    "targetAudience": ["AI Engineers", "Data Scientists"]
   },
   {
     "id": 4,
-    "title": "The Future of JavaScript: What's Coming in ES2023",
-    "summary": "From array methods to decorator improvements, explore the upcoming features that will shape the next version of JavaScript.",
-    "date": "September 5, 2023",
-    "imageUrl": "https://images.unsplash.com/photo-1649972904349-6e44c42644a7",
-    "slug": "javascript-es2023-features",
-    "tags": ["JavaScript", "ES2023", "Web Development", "Programming"],
-    "content": "<p>JavaScript continues to evolve at a rapid pace. Each year brings new features that make the language more powerful and developer-friendly. Let's look at what's coming in ES2023.</p><h2>Array Methods: findLast() and findLastIndex()</h2><p>These new methods complement the existing find() and findIndex() methods by searching arrays from the end to the beginning:</p><pre><code>const array = [1, 2, 3, 4, 5];<br><br>// Find the last even number<br>const lastEven = array.findLast(n => n % 2 === 0);<br>console.log(lastEven); // 4<br><br>// Find the index of the last even number<br>const lastEvenIndex = array.findLastIndex(n => n % 2 === 0);<br>console.log(lastEvenIndex); // 3</code></pre><h2>Hashbang Grammar</h2><p>Hashbangs allow JavaScript files to be executed directly as scripts in Unix-like environments:</p><pre><code>#!/usr/bin/env node<br><br>console.log('Hello from a directly executable JS file!');</code></pre><h2>Symbols as WeakMap Keys</h2><p>ES2023 will allow Symbols to be used as keys in WeakMaps, providing more flexibility in creating private object metadata:</p><pre><code>const privateData = new WeakMap();<br>const key = Symbol('private');<br><br>const obj = {};<br>privateData.set(key, 'Secret data');<br><br>console.log(privateData.get(key)); // 'Secret data'</code></pre><h2>Decorator Improvements</h2><p>While decorators have been in proposal stages for years, ES2023 aims to finalize an improved version:</p><pre><code>class Example {<br>  @logged<br>  method() {<br>    return 'result';<br>  }<br>}<br><br>function logged(originalMethod, context) {<br>  return function(...args) {<br>    console.log(`Calling ${context.name} with args:`, args);<br>    const result = originalMethod.apply(this, args);<br>    console.log(`Result:`, result);<br>    return result;<br>  };<br>}</code></pre><h2>Getting Ready for ES2023</h2><p>While browser support for these features may take time, you can start using many of them today with transpilers like Babel or by using TypeScript.</p><p>For those who like to stay on the cutting edge of JavaScript development, now is a great time to start experimenting with these upcoming features.</p>"
+    "title": "From Idea to Automation: Building Custom AI Workflows",
+    "summary": "Learn how to design, build, and deploy custom AI automation workflows using Python and popular frameworks.",
+    "date": "March 30, 2025",
+    "imageUrl": "/src/Images/4.png",
+    "slug": "custom-ai-workflows",
+    "tags": ["AI Automation", "Python", "Workflow Design"],
+    "content": "<p>Designing effective AI workflows requires understanding your data sources... (content truncated for brevity)</p>",
+    "targetAudience": ["Developers", "AI Enthusiasts"]
   },
   {
     "id": 5,
-    "title": "Optimizing Web Performance: Core Web Vitals Explained",
-    "summary": "Learn how to measure and improve Core Web Vitals metrics to enhance user experience and boost your site's search engine rankings.",
-    "date": "October 19, 2023",
-    "imageUrl": "https://images.unsplash.com/photo-1531297484001-80022131f5a1",
-    "slug": "core-web-vitals-optimization",
-    "tags": ["Performance", "SEO", "Web Vitals", "Optimization"],
-    "content": "<p>Google's Core Web Vitals have become critical metrics for measuring user experience on the web. These metrics focus on loading performance, interactivity, and visual stability.</p><h2>Understanding the Three Core Web Vitals</h2><p>The Core Web Vitals consist of three specific metrics:</p><h3>Largest Contentful Paint (LCP)</h3><p>LCP measures loading performance. For a good user experience, LCP should occur within 2.5 seconds of when the page first starts loading.</p><pre><code>// Measure LCP using the web-vitals library<br>import { getLCP } from 'web-vitals';<br><br>getLCP(console.log);</code></pre><h3>First Input Delay (FID)</h3><p>FID measures interactivity. For a good user experience, pages should have a FID of 100 milliseconds or less.</p><pre><code>import { getFID } from 'web-vitals';<br><br>getFID(console.log);</code></pre><h3>Cumulative Layout Shift (CLS)</h3><p>CLS measures visual stability. For a good user experience, pages should maintain a CLS of 0.1 or less.</p><pre><code>import { getCLS } from 'web-vitals';<br><br>getCLS(console.log);</code></pre><h2>Optimizing for Core Web Vitals</h2><h3>Improving LCP</h3><ul><li>Optimize and compress images</li><li>Implement proper resource prioritization</li><li>Use a Content Delivery Network (CDN)</li><li>Remove render-blocking resources</li></ul><h3>Reducing FID</h3><ul><li>Break up long tasks</li><li>Optimize JavaScript execution</li><li>Use web workers for heavy computations</li><li>Reduce JavaScript bundle size</li></ul><h3>Minimizing CLS</h3><ul><li>Always include size attributes on images and video elements</li><li>Reserve space for ads and embeds</li><li>Avoid inserting content above existing content</li><li>Use transform animations instead of properties that trigger layout changes</li></ul><h2>Measuring Core Web Vitals</h2><p>There are several tools you can use to measure Core Web Vitals:</p><ol><li>Lighthouse in Chrome DevTools</li><li>Chrome User Experience Report</li><li>PageSpeed Insights</li><li>Search Console (Core Web Vitals report)</li><li>web-vitals JavaScript library</li></ol><p>Regular monitoring of these metrics is essential for maintaining good performance as your site evolves.</p><p>By focusing on optimizing these specific metrics, you can significantly improve the user experience on your website while potentially boosting your search engine rankings.</p>"
+    "title": "Boosting Productivity with AI-Driven Blog Writing Tools",
+    "summary": "Uncover powerful AI tools that can brainstorm ideas, structure content, and even generate engaging blog posts in minutes.",
+    "date": "March 30, 2025",
+    "imageUrl": "/src/Images/5.png",
+    "slug": "ai-driven-blog-tools",
+    "tags": ["AI", "Content Creation", "Productivity"],
+    "content": "<p>AI writing tools are transforming the content creation landscape... (content truncated for brevity)</p>",
+    "targetAudience": ["Content Creators", "Marketers"]
   }
 ]
