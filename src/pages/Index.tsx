@@ -6,7 +6,7 @@ import PageTransition from '../components/PageTransition';
 const Index = () => {
   return (
     <PageTransition>
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-background to-slate-100 dark:from-background dark:to-slate-900">
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-background to-slate-100 dark:from-background dark:to-slate-900 starry-background nebula-background">
         <div className="text-center max-w-3xl px-4">
           <h1 className="text-5xl md:text-6xl font-bold mb-6 animate-fade-in">Welcome to SanathBlog</h1>
           <p className="text-xl text-muted-foreground mb-8 animate-fade-in" style={{ animationDelay: '200ms' }}>
