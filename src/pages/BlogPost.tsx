@@ -7,6 +7,8 @@ import blogPosts from '../data/blogPosts.json';
 import BlogCard from '../components/BlogCard';
 import { Clock, Share2 } from 'lucide-react';
 import { toast } from 'sonner';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 
 interface RouteParams {
   slug: string;
@@ -18,6 +20,7 @@ const BlogPost: React.FC = () => {
   const [post, setPost] = useState<typeof blogPosts[0] | null>(null);
   const [loading, setLoading] = useState(true);
   const [relatedPosts, setRelatedPosts] = useState<typeof blogPosts>([]);
+  const [markdownContent, setMarkdownContent] = useState<string | null>(null);
   
   useEffect(() => {
     // Find the post that matches the slug
@@ -35,15 +38,31 @@ const BlogPost: React.FC = () => {
         .slice(0, 3); // Limit to 3 related posts
       
       setRelatedPosts(related);
-    }
-    
-    // Simulate loading delay for smooth transitions
-    const timer = setTimeout(() => {
-      setPost(foundPost || null);
+      
+      // Load markdown content
+      fetch(`/src/data/markdown/${slug}.md`)
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('Markdown file not found');
+          }
+          return response.text();
+        })
+        .then(markdown => {
+          setMarkdownContent(markdown);
+        })
+        .catch(error => {
+          console.error('Error loading markdown:', error);
+          // Fallback to HTML content if markdown doesn't exist
+          setMarkdownContent(null);
+        })
+        .finally(() => {
+          setPost(foundPost);
+          setLoading(false);
+        });
+    } else {
+      setPost(null);
       setLoading(false);
-    }, 300);
-    
-    return () => clearTimeout(timer);
+    }
   }, [slug]);
   
   // Calculate estimated reading time
@@ -137,7 +156,11 @@ const BlogPost: React.FC = () => {
                     {/* Reading time */}
                     <div className="flex items-center">
                       <Clock className="h-4 w-4 mr-1" />
-                      <span className="text-sm">{getReadingTime(post.content)} min read</span>
+                      <span className="text-sm">
+                        {markdownContent 
+                          ? getReadingTime(markdownContent) 
+                          : getReadingTime(post.content)} min read
+                      </span>
                     </div>
                     
                     {/* Share button */}
@@ -163,10 +186,15 @@ const BlogPost: React.FC = () => {
               </div>
               
               {/* Post content */}
-              <div 
-                className="blog-content prose prose-lg max-w-none"
-                dangerouslySetInnerHTML={{ __html: post.content }}
-              />
+              <div className="blog-content prose prose-lg max-w-none">
+                {markdownContent ? (
+                  <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                    {markdownContent}
+                  </ReactMarkdown>
+                ) : (
+                  <div dangerouslySetInnerHTML={{ __html: post.content }} />
+                )}
+              </div>
               
               {/* Post navigation */}
               <div className="mt-16 pt-8 border-t border-border grid grid-cols-1 md:grid-cols-2 gap-6">
