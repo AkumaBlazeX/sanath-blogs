@@ -50,7 +50,7 @@ const Header: React.FC = () => {
         </Link>
         
         <nav className="hidden md:flex items-center space-x-1">
-          <Link to="/" className={`nav-item ${isActive('/') ? 'active' : ''}`}>
+          <Link to="/home" className={`nav-item ${isActive('/home') ? 'active' : ''}`}>
             Home
           </Link>
           <Link to="/blog" className={`nav-item ${isActive('/blog') || location.pathname.startsWith('/blog/') ? 'active' : ''}`}>
