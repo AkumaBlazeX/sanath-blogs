@@ -6,6 +6,7 @@ import emailjs from 'emailjs-com';
 import { Alert, AlertTitle, AlertDescription } from '@/components/ui/alert';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
+import { supabase } from '@/integrations/supabase/client';
 
 const Subscribe = () => {
   const { toast } = useToast();
@@ -14,8 +15,16 @@ const Subscribe = () => {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [emailJSError, setEmailJSError] = useState<string | null>(null);
   const [isConfigured, setIsConfigured] = useState(false);
+  const [hasSubscribed, setHasSubscribed] = useState(false);
 
   useEffect(() => {
+    // Check local storage for subscription
+    const subscribedEmail = localStorage.getItem('subscribedEmail');
+    if (subscribedEmail) {
+      setHasSubscribed(true);
+      return;
+    }
+
     // Initialize EmailJS
     try {
       const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
@@ -64,13 +73,24 @@ const Subscribe = () => {
     const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID || '';
     const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID || '';
     
-    const templateParams = {
-      email: email,
-      subject: 'New Blog Subscription',
-      message: `New subscription request from ${email}`
-    };
-
     try {
+      // First try to add to the Supabase database
+      const { error } = await supabase
+        .from('subscriptions')
+        .insert([{ email: email }]);
+      
+      if (error && error.code !== '23505') { // 23505 is the error code for unique violation (already subscribed)
+        console.error('Supabase error:', error);
+        throw new Error(error.message || 'Failed to save subscription');
+      }
+
+      // Send email notification
+      const templateParams = {
+        email: email,
+        subject: 'New Blog Subscription',
+        message: `New subscription request from ${email}`
+      };
+
       await emailjs.send(
         serviceId,
         templateId,
@@ -79,7 +99,11 @@ const Subscribe = () => {
 
       setIsSubmitting(false);
       setIsSubmitted(true);
+      setHasSubscribed(true);
       setEmail('');
+      
+      // Save to local storage
+      localStorage.setItem('subscribedEmail', email);
 
       toast({
         title: "Subscription successful!",
@@ -88,7 +112,7 @@ const Subscribe = () => {
 
       setTimeout(() => setIsSubmitted(false), 5000);
     } catch (error: any) {
-      console.error('EmailJS error:', error);
+      console.error('Subscription error:', error);
       setIsSubmitting(false);
 
       toast({
@@ -98,6 +122,27 @@ const Subscribe = () => {
       });
     }
   };
+
+  if (hasSubscribed) {
+    return (
+      <div className="w-full py-12 md:py-16 glass">
+        <div className="container-custom">
+          <div className="max-w-3xl mx-auto text-center">
+            <h2 className="text-2xl md:text-3xl font-bold mb-4">
+              Thanks for subscribing!
+            </h2>
+            <p className="text-muted-foreground max-w-2xl mx-auto">
+              You're all set to receive our latest articles and insights on Data Science, AI automation, and machine learning.
+            </p>
+            <div className="flex items-center justify-center space-x-2 text-primary mt-4">
+              <CheckCircle className="h-5 w-5" />
+              <span>Successfully subscribed</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="w-full py-12 md:py-16 glass">
@@ -168,7 +213,7 @@ const Subscribe = () => {
           )}
           
           <p className="text-xs text-muted-foreground mt-4">
-            By subscribing, you agree to our Privacy Policy and to receive updates from our blog.
+            By subscribing, you agree to our <a href="/privacy-policy" className="underline hover:text-primary">Privacy Policy</a> and <a href="/terms-of-service" className="underline hover:text-primary">Terms of Service</a>.
           </p>
         </div>
       </div>
