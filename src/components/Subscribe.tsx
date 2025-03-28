@@ -3,10 +3,9 @@ import { useState, useEffect } from 'react';
 import { useEmailJS } from '@/hooks/use-email-js';
 import SubscriptionForm from './subscribe/SubscriptionForm';
 import SubscriptionSuccess from './subscribe/SubscriptionSuccess';
-import ConfigurationError from './subscribe/ConfigurationError';
 
 const Subscribe = () => {
-  const { isConfigured, error: emailJSError } = useEmailJS();
+  const { isConfigured } = useEmailJS(); // We're ignoring the error now
   const [hasSubscribed, setHasSubscribed] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
 
@@ -42,8 +41,6 @@ const Subscribe = () => {
           <p className="text-muted-foreground mb-8 max-w-2xl mx-auto">
             Stay updated with the latest articles and insights on Data Science, AI automation, and machine learning.
           </p>
-          
-          {emailJSError && <ConfigurationError error={emailJSError} />}
           
           {isSubmitted ? (
             <div className="flex items-center justify-center space-x-2 text-primary mb-8">

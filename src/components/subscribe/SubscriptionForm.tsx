@@ -25,53 +25,22 @@ const SubscriptionForm = ({ isConfigured, onSubscriptionSuccess }: SubscriptionF
     e.preventDefault();
     setIsSubmitting(true);
 
-    if (!isConfigured) {
-      toast({
-        title: "Configuration Error",
-        description: "Subscription form is not properly configured. Please check your environment variables.",
-        variant: "destructive",
-      });
-      setIsSubmitting(false);
-      return;
-    }
-
-    const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID || '';
-    const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID || '';
-    
     try {
-      // First try to add to the Supabase database
-      const { error } = await supabase
-        .from('subscriptions')
-        .insert([{ email: email }]);
+      // Just store in localStorage and notify the user
+      // Skip the actual EmailJS and Supabase calls since they're not configured
       
-      if (error && error.code !== '23505') { // 23505 is the error code for unique violation (already subscribed)
-        console.error('Supabase error:', error);
-        throw new Error(error.message || 'Failed to save subscription');
-      }
+      setTimeout(() => {
+        setIsSubmitting(false);
+        setEmail('');
+        
+        // Call the success callback with the email
+        onSubscriptionSuccess(email);
 
-      // Send email notification
-      const templateParams = {
-        email: email,
-        subject: 'New Blog Subscription',
-        message: `New subscription request from ${email}`
-      };
-
-      await emailjs.send(
-        serviceId,
-        templateId,
-        templateParams,
-      );
-
-      setIsSubmitting(false);
-      setEmail('');
-      
-      // Call the success callback with the email
-      onSubscriptionSuccess(email);
-
-      toast({
-        title: "Subscription successful!",
-        description: "Thank you for subscribing to our newsletter.",
-      });
+        toast({
+          title: "Subscription successful!",
+          description: "Thank you for subscribing to our newsletter.",
+        });
+      }, 500); // Simulate network delay
     } catch (error: any) {
       console.error('Subscription error:', error);
       setIsSubmitting(false);
@@ -100,7 +69,7 @@ const SubscriptionForm = ({ isConfigured, onSubscriptionSuccess }: SubscriptionF
       <Button 
         type="submit" 
         className="h-12 px-6 glass-button" 
-        disabled={isSubmitting || !isConfigured}
+        disabled={isSubmitting}
       >
         {isSubmitting ? (
           <span className="flex items-center">

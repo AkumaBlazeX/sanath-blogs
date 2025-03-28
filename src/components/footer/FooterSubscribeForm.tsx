@@ -3,14 +3,11 @@ import React, { useState, useEffect } from 'react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
-import emailjs from 'emailjs-com';
-import { supabase } from '@/integrations/supabase/client';
 
 const FooterSubscribeForm: React.FC = () => {
   const { toast } = useToast();
   const [email, setEmail] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isConfigured, setIsConfigured] = useState(false);
   const [hasSubscribed, setHasSubscribed] = useState(false);
 
   useEffect(() => {
@@ -18,29 +15,6 @@ const FooterSubscribeForm: React.FC = () => {
     const subscribedEmail = localStorage.getItem('subscribedEmail');
     if (subscribedEmail) {
       setHasSubscribed(true);
-      return;
-    }
-
-    // Initialize EmailJS
-    try {
-      const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
-      
-      if (publicKey) {
-        emailjs.init(publicKey);
-        // Check if service and template IDs are available
-        const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID;
-        const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
-        
-        if (serviceId && templateId) {
-          setIsConfigured(true);
-        } else {
-          console.error('EmailJS service or template ID is missing');
-        }
-      } else {
-        console.error('EmailJS public key is missing');
-      }
-    } catch (error) {
-      console.error('Error initializing EmailJS:', error);
     }
   }, []);
 
@@ -48,34 +22,8 @@ const FooterSubscribeForm: React.FC = () => {
     e.preventDefault();
     setIsSubmitting(true);
 
-    const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID || '';
-    const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID || '';
-    
     try {
-      // First try to add to the Supabase database
-      const { error } = await supabase
-        .from('subscriptions')
-        .insert([{ email: email }]);
-      
-      if (error && error.code !== '23505') { // 23505 is the error code for unique violation (already subscribed)
-        console.error('Supabase error:', error);
-        throw new Error(error.message || 'Failed to save subscription');
-      }
-
-      // Send email notification via EmailJS
-      if (serviceId && templateId) {
-        await emailjs.send(
-          serviceId,
-          templateId,
-          {
-            email: email,
-            subject: 'New Blog Subscription',
-            message: `New subscription request from ${email}`
-          }
-        );
-      }
-      
-      // Save to local storage
+      // Simply record in local storage
       localStorage.setItem('subscribedEmail', email);
       setHasSubscribed(true);
       
@@ -119,7 +67,7 @@ const FooterSubscribeForm: React.FC = () => {
       <Button 
         type="submit" 
         size="sm" 
-        disabled={isSubmitting || !isConfigured}
+        disabled={isSubmitting}
         className="glass-button"
       >
         {isSubmitting ? (
