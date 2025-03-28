@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
+import { supabase } from "@/integrations/supabase/client";
 
 const FooterSubscribeForm: React.FC = () => {
   const { toast } = useToast();
@@ -23,20 +24,36 @@ const FooterSubscribeForm: React.FC = () => {
     setIsSubmitting(true);
 
     try {
-      // Simply record in local storage
-      localStorage.setItem('subscribedEmail', email);
-      setHasSubscribed(true);
-      
-      toast({
-        title: "Successfully subscribed!",
-        description: "Thank you for subscribing to our newsletter.",
-      });
-      
-      setEmail('');
+      // Store the subscription in Supabase
+      const { error } = await supabase
+        .from('subscriptions')
+        .insert([{ email }]);
+
+      if (error) {
+        if (error.code === '23505') { // Unique constraint violation
+          toast({
+            title: "Already subscribed",
+            description: "This email is already subscribed to our newsletter.",
+          });
+          // Still consider this a success since the email is subscribed
+          setHasSubscribed(true);
+          localStorage.setItem('subscribedEmail', email);
+        } else {
+          throw error;
+        }
+      } else {
+        localStorage.setItem('subscribedEmail', email);
+        setHasSubscribed(true);
+        toast({
+          title: "Successfully subscribed!",
+          description: "Thank you for subscribing to our newsletter.",
+        });
+        setEmail('');
+      }
     } catch (error: any) {
       toast({
         title: "Error subscribing",
-        description: `Error: ${error?.text || error?.message || 'Unknown error. Please try again later.'}`,
+        description: `Error: ${error?.message || 'Unknown error. Please try again later.'}`,
         variant: "destructive",
       });
     } finally {

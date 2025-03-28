@@ -2,17 +2,15 @@
 import { useState } from 'react';
 import { Mail, ArrowRight } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
-import emailjs from 'emailjs-com';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { supabase } from '@/integrations/supabase/client';
 
 interface SubscriptionFormProps {
-  isConfigured: boolean;
   onSubscriptionSuccess: (email: string) => void;
 }
 
-const SubscriptionForm = ({ isConfigured, onSubscriptionSuccess }: SubscriptionFormProps) => {
+const SubscriptionForm = ({ onSubscriptionSuccess }: SubscriptionFormProps) => {
   const { toast } = useToast();
   const [email, setEmail] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -26,30 +24,39 @@ const SubscriptionForm = ({ isConfigured, onSubscriptionSuccess }: SubscriptionF
     setIsSubmitting(true);
 
     try {
-      // Just store in localStorage and notify the user
-      // Skip the actual EmailJS and Supabase calls since they're not configured
-      
-      setTimeout(() => {
-        setIsSubmitting(false);
-        setEmail('');
-        
-        // Call the success callback with the email
-        onSubscriptionSuccess(email);
+      // Store the subscription in Supabase
+      const { error } = await supabase
+        .from('subscriptions')
+        .insert([{ email }]);
 
+      if (error) {
+        if (error.code === '23505') { // Unique constraint violation
+          toast({
+            title: "Already subscribed",
+            description: "This email is already subscribed to our newsletter.",
+          });
+          // Still consider this a success since the email is subscribed
+          onSubscriptionSuccess(email);
+        } else {
+          throw error;
+        }
+      } else {
+        setEmail('');
+        onSubscriptionSuccess(email);
         toast({
           title: "Subscription successful!",
           description: "Thank you for subscribing to our newsletter.",
         });
-      }, 500); // Simulate network delay
+      }
     } catch (error: any) {
       console.error('Subscription error:', error);
-      setIsSubmitting(false);
-
       toast({
         title: "Error subscribing",
-        description: `Error: ${error?.text || error?.message || 'Unknown error. Please try again later.'}`,
+        description: `Error: ${error?.message || 'Unknown error. Please try again later.'}`,
         variant: "destructive",
       });
+    } finally {
+      setIsSubmitting(false);
     }
   };
 

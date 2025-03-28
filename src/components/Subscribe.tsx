@@ -1,11 +1,9 @@
 
 import { useState, useEffect } from 'react';
-import { useEmailJS } from '@/hooks/use-email-js';
 import SubscriptionForm from './subscribe/SubscriptionForm';
 import SubscriptionSuccess from './subscribe/SubscriptionSuccess';
 
 const Subscribe = () => {
-  const { isConfigured } = useEmailJS(); // We're ignoring the error now
   const [hasSubscribed, setHasSubscribed] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
 
@@ -48,7 +46,6 @@ const Subscribe = () => {
             </div>
           ) : (
             <SubscriptionForm 
-              isConfigured={isConfigured} 
               onSubscriptionSuccess={handleSubscriptionSuccess} 
             />
           )}
