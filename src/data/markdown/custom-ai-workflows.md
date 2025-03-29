@@ -37,7 +37,7 @@ Refer to these resources for guidance:
 
 In order to get the best output, refer to this sample image that illustrates how the content is structured:
 
-![Prompt Example](https://eetbqplrrpfakagerrag.supabase.co/storage/v1/object/public/blog-images//image.png)
+![Prompt Example](https://eetbqplrrpfakagerrag.supabase.co/storage/v1/object/public/blog-images//image.jpeg)
 
 ### **3. Edit Your Content** 
 **What it does**: Lets you tweak the AI's draft to match your voice.  
