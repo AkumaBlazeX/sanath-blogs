@@ -22,11 +22,29 @@ const BlogPost: React.FC = () => {
   const [relatedPosts, setRelatedPosts] = useState<typeof blogPosts>([]);
   const [markdownContent, setMarkdownContent] = useState<string | null>(null);
   
+  // Function to convert Google Drive view URLs to direct image URLs
+  const getProcessedImageUrl = (url: string) => {
+    if (url.includes('drive.google.com/file/d/')) {
+      // Extract the file ID from the Google Drive URL
+      const fileIdMatch = url.match(/\/d\/([^\/]+)/);
+      if (fileIdMatch && fileIdMatch[1]) {
+        return `https://drive.google.com/uc?id=${fileIdMatch[1]}`;
+      }
+    }
+    return url;
+  };
+  
   useEffect(() => {
     // Find the post that matches the slug
     const foundPost = blogPosts.find(p => p.slug === slug);
     
     if (foundPost) {
+      // Transform the image URL if it's from Google Drive
+      const processedPost = {
+        ...foundPost,
+        imageUrl: getProcessedImageUrl(foundPost.imageUrl)
+      };
+      
       // Find related posts that share at least one tag
       const related = blogPosts
         .filter(p => 
@@ -48,7 +66,14 @@ const BlogPost: React.FC = () => {
           return response.text();
         })
         .then(markdown => {
-          setMarkdownContent(markdown);
+          // Replace Google Drive image URLs in markdown
+          const processedMarkdown = markdown.replace(
+            /!\[([^\]]+)\]\((https:\/\/drive\.google\.com\/file\/d\/[^\/]+\/[^\)]+)\)/g,
+            (match, altText, url) => {
+              return `![${altText}](${getProcessedImageUrl(url)})`;
+            }
+          );
+          setMarkdownContent(processedMarkdown);
         })
         .catch(error => {
           console.error('Error loading markdown:', error);
@@ -56,7 +81,7 @@ const BlogPost: React.FC = () => {
           setMarkdownContent(null);
         })
         .finally(() => {
-          setPost(foundPost);
+          setPost(processedPost);
           setLoading(false);
         });
     } else {
@@ -103,6 +128,17 @@ const BlogPost: React.FC = () => {
   const currentIndex = post ? blogPosts.findIndex(p => p.slug === post.slug) : -1;
   const prevPost = currentIndex > 0 ? blogPosts[currentIndex - 1] : null;
   const nextPost = currentIndex < blogPosts.length - 1 ? blogPosts[currentIndex + 1] : null;
+
+  // Custom renderer for markdown images
+  const MarkdownComponents = {
+    img: ({ src, alt, ...props }: React.ImgHTMLAttributes<HTMLImageElement>) => {
+      if (src) {
+        const processedSrc = getProcessedImageUrl(src);
+        return <LazyImage src={processedSrc} alt={alt || ""} className="w-full h-auto my-4 rounded-lg" />;
+      }
+      return null;
+    }
+  };
 
   return (
     <PageTransition>
@@ -188,7 +224,10 @@ const BlogPost: React.FC = () => {
               {/* Post content */}
               <div className="blog-content prose prose-lg max-w-none">
                 {markdownContent ? (
-                  <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                  <ReactMarkdown 
+                    remarkPlugins={[remarkGfm]}
+                    components={MarkdownComponents}
+                  >
                     {markdownContent}
                   </ReactMarkdown>
                 ) : (
@@ -229,18 +268,21 @@ const BlogPost: React.FC = () => {
               <section className="max-w-6xl mx-auto mb-16 py-12 border-t border-border">
                 <h2 className="text-2xl font-bold mb-8 text-center">Related Posts</h2>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                  {relatedPosts.map(relatedPost => (
-                    <BlogCard
-                      key={relatedPost.id}
-                      id={relatedPost.id}
-                      title={relatedPost.title}
-                      summary={relatedPost.summary}
-                      date={relatedPost.date}
-                      imageUrl={relatedPost.imageUrl}
-                      slug={relatedPost.slug}
-                      tags={relatedPost.tags}
-                    />
-                  ))}
+                  {relatedPosts.map(relatedPost => {
+                    const processedImageUrl = getProcessedImageUrl(relatedPost.imageUrl);
+                    return (
+                      <BlogCard
+                        key={relatedPost.id}
+                        id={relatedPost.id}
+                        title={relatedPost.title}
+                        summary={relatedPost.summary}
+                        date={relatedPost.date}
+                        imageUrl={processedImageUrl}
+                        slug={relatedPost.slug}
+                        tags={relatedPost.tags}
+                      />
+                    );
+                  })}
                 </div>
               </section>
             )}

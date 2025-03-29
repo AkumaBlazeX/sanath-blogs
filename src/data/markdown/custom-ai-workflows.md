@@ -1,3 +1,4 @@
+
 ## **Why This Workflow?**
 
 - **Time-Saving**: Automate repetitive tasks like content generation and distribution.
@@ -40,7 +41,7 @@ In order to get the best output, refer to this sample image that illustrates how
 
 ### **3. Edit Your Content**
 
-**What it does**: Lets you tweak the AI’s draft to match your voice.\
+**What it does**: Lets you tweak the AI's draft to match your voice.\
 **Example**: Change formal phrases like *"One may consider"* to *"You should totally try..."*\
 **Why are we using this**: Because ChatGPT may hallucinate or provide inaccurate information, so this editing step ensures high-quality content.
 
@@ -83,7 +84,7 @@ Now our workflow is ready to send content models.
 6. Use **Code** for extra automation.
 7. Send the final piece to subscribers via **Gmail**.
 
-## **Why You’ll Love It**
+## **Why You'll Love It**
 
 - **Effortless**: Focus on creativity while AI handles the heavy lifting.
 - **Scalable**: Go from 1 blog/month to 10 blogs/week.
