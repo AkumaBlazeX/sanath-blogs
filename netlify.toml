@@ -1,0 +1,29 @@
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+  force = true
+
+# Handle the Google verification file
+[[redirects]]
+  from = "/google032477ed52afa07e.html"
+  to = "/google032477ed52afa07e.html"
+  status = 200
+  force = true
+
+# Handle the sitemap.xml file
+[[redirects]]
+  from = "/home/sitemap.xml"
+  to = "/sitemap.xml"
+  status = 200
+  force = true
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-XSS-Protection = "1; mode=block" 
