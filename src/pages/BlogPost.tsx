@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from 'react';
 import { useParams, Link, Navigate } from 'react-router-dom';
 import PageTransition from '../components/PageTransition';
@@ -58,7 +57,7 @@ const BlogPost: React.FC = () => {
       setRelatedPosts(related);
       
       // Load markdown content
-      fetch(`/src/data/markdown/${slug}.md`)
+      fetch(`/markdown/${slug}.md`)
         .then(response => {
           if (!response.ok) {
             throw new Error('Markdown file not found');
