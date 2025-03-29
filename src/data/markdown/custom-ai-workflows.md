@@ -37,7 +37,7 @@ Refer to these resources for guidance:
 
 In order to get the best output, refer to this sample image that illustrates how the content is structured:
 
-![Prompt Example](https://drive.google.com/uc?id=1F2t5Y9Oa8EVsMQuXKfpuNATRn21XVfw9)
+![Prompt Example](https://eetbqplrrpfakagerrag.supabase.co/storage/v1/object/public/blog-images//image.png)
 
 ### **3. Edit Your Content** 
 **What it does**: Lets you tweak the AI's draft to match your voice.  
@@ -52,7 +52,7 @@ In order to get the best output, refer to this sample image that illustrates how
 **What it does**: Sends a Slack message when the blog is ready.  
 **How can we achieve this:** Follow the [Slack setup guide](https://docs.n8n.io/integrations/builtin/credentials/slack/) for steps to create a channel, app, OAuth ID, and scopes to connect Slack with n8n.
 
-![Slack Example](https://drive.google.com/uc?id=1QUHagGH-AxUagH0uesBsXkYyGOWavuzg)
+![Slack Example](https://eetbqplrrpfakagerrag.supabase.co/storage/v1/object/public/blog-images//Slack.jpeg)
 
 ### **6. Organize in Notion** 
 **What it does**: Saves your blog details (title, tags, publish date) in a Notion database.  
