@@ -174,7 +174,7 @@ const BlogPost: React.FC = () => {
                   {post.tags && post.tags.map(tag => (
                     <Link 
                       key={tag} 
-                      to={`/blog?tag=${tag}`}
+                      to={`/blog?tag=${encodeURIComponent(tag)}`}
                       className="inline-block px-2.5 py-0.5 text-xs font-medium rounded-full bg-primary/10 text-primary hover:bg-primary/20 transition-colors"
                     >
                       {tag}
@@ -192,9 +192,9 @@ const BlogPost: React.FC = () => {
                     <div className="flex items-center">
                       <Clock className="h-4 w-4 mr-1" />
                       <span className="text-sm">
-                        {markdownContent 
+                        {post.readTime || (markdownContent 
                           ? getReadingTime(markdownContent) 
-                          : getReadingTime(post.content)} min read
+                          : getReadingTime(post.content)) + ' min read'}
                       </span>
                     </div>
                     
@@ -209,6 +209,27 @@ const BlogPost: React.FC = () => {
                     </button>
                   </div>
                 </div>
+
+                {/* Additional metadata */}
+                {post.filters && (
+                  <div className="mt-4 flex flex-wrap gap-4 text-sm text-muted-foreground">
+                    {post.filters.category && (
+                      <div>
+                        <span className="font-medium">Category:</span> {post.filters.category}
+                      </div>
+                    )}
+                    {post.filters.difficulty && (
+                      <div>
+                        <span className="font-medium">Level:</span> {post.filters.difficulty}
+                      </div>
+                    )}
+                    {post.filters.tools && post.filters.tools.length > 0 && (
+                      <div>
+                        <span className="font-medium">Tools:</span> {post.filters.tools.join(', ')}
+                      </div>
+                    )}
+                  </div>
+                )}
               </header>
               
               {/* Featured image */}

@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import BlogCard from '../components/BlogCard';
 import PageTransition from '../components/PageTransition';
@@ -11,18 +10,21 @@ const Blog: React.FC = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const postsPerPage = 6;
   
-  // Extract all unique tags from blog posts
+  // Extract all unique tags from blog posts, excluding content headers
   const allTags = Array.from(
     new Set(
       blogPosts.flatMap(post => post.tags || [])
     )
-  );
+  ).filter(tag => tag); // Remove any undefined or empty tags
   
   // Filter posts based on search term and selected tag
   const filteredPosts = blogPosts.filter(post => {
     const matchesSearch = searchTerm === '' || 
       post.title.toLowerCase().includes(searchTerm.toLowerCase()) || 
-      post.summary.toLowerCase().includes(searchTerm.toLowerCase());
+      post.summary.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      post.meta?.keywords?.some(keyword => 
+        keyword.toLowerCase().includes(searchTerm.toLowerCase())
+      );
     
     const matchesTag = selectedTag === null || 
       (post.tags && post.tags.includes(selectedTag));

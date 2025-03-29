@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
@@ -59,6 +58,11 @@ const BlogCard: React.FC<BlogCardProps> = ({
                 {tag}
               </span>
             ))}
+            {tags.length > (featured ? 3 : 2) && (
+              <span className="inline-block px-2.5 py-0.5 text-xs font-medium rounded-full bg-secondary/10 text-secondary">
+                +{tags.length - (featured ? 3 : 2)}
+              </span>
+            )}
           </div>
         )}
         
