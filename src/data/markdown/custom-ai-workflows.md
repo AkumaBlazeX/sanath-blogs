@@ -1,105 +1,91 @@
+## **Why This Workflow?**
 
-# From Idea to Automation: Building Custom AI Workflows
+- **Time-Saving**: Automate repetitive tasks like content generation and distribution.
+- **Multi-Platform Ready**: Share content on Slack, Notion, email, and social media.
+- **AI-Powered**: Use OpenAI to brainstorm and write blogs in minutes.
+- **Perfect for Beginners**: No coding skills needed—just set up and go!
 
-Designing and deploying custom AI automation workflows requires combining scalable infrastructure, efficient data handling, and robust error management. Below, we break down how to use Python tools like FastAPI, Celery, and LangChain to build end-to-end solutions.
+---
 
-## 1. Core Components of AI Automation
+## **Step-by-Step Process**
 
-### Workflow Orchestration
-- **Role**: Manages task sequencing, parallelism, and retries.
-- **Tools**: Celery (distributed task queue), Prefect (pipeline management), Airflow (scheduling).
+### **1. Start with Google Sheets**
 
-### API Layer
-- **Role**: Exposes endpoints to trigger/control workflows.
-- **Tools**: FastAPI (ASGI framework), Flask (REST API).
+**What it does**: Triggers the workflow when you add a new blog idea to your Google Sheets.\
+**How does it work:**
 
-### AI/ML Operations
-- **Role**: Executes LLM calls, data processing, or model inferences.
-- **Tools**: LangChain (AI chains), PyTorch/TensorFlow (model serving), OpenAI API.
+Here I have given the input as this:
 
-## 2. Why FastAPI + Celery + LangChain?
-- **Scalability**: Celery workers handle parallel tasks (e.g., processing 100+ requests/sec).
-- **Flexibility**: FastAPI's async support integrates with AI pipelines seamlessly.
-- **Speed**: LangChain simplifies complex AI logic (e.g., RAG, summarization).
+| Id | Title        | Subtitle        | Subject | Keywords       | Tags       | Tone        | Image      | Target\_Audience |
+| -- | ------------ | --------------- | ------- | -------------- | ---------- | ----------- | ---------- | ---------------- |
+| 1  | Sample Title | Sample Subtitle | Tech    | AI, Automation | Tech, Blog | Informative | Image1.jpg | Gen-Z Creators   |
 
-## 3. Sample Implementation: Document Processing Workflow
-**Objective**: Automatically extract insights from uploaded PDFs and email summaries.
-**Tools**: FastAPI (API), Celery (async tasks), LangChain (text processing).
+Taking this as input, our custom AI agent can trigger with the message we write in the next section. To connect Google Sheets, follow the [n8n Google Sheets setup guide](https://docs.n8n.io/external-secrets/#use-secrets-in-n8n-credentials).
 
-**Steps**:
-1. User uploads a PDF via FastAPI endpoint.
-2. Celery triggers a task to extract text using LangChain's PDF loader.
-3. LangChain summarizes text via GPT-4 and saves results to a database.
-4. Celery sends summary via SMTP/email API.
+### **2. Generate Content with OpenAI**
 
-**Code Snippet**:
-```python
-# FastAPI endpoint  
-from fastapi import FastAPI  
-from celery import Celery  
-from langchain.document_loaders import PyPDFLoader  
+**What it does**: Uses AI to write a full blog post from your topic and keywords.\
+**How does this work:**
 
-app = FastAPI()  
-celery = Celery("tasks", broker="redis://localhost:6379/0")  
+In this step, we must follow OpenAI's guidelines to create API keys for connecting our n8n workflow with ChatGPT.
 
-@celery.task  
-def process_pdf(file_path: str):  
-    loader = PyPDFLoader(file_path)  
-    docs = loader.load()  
-    # Summarize with LangChain + OpenAI  
-    # Send email via SMTP  
+Refer to these resources for guidance:
 
-@app.post("/upload")  
-async def upload_file(file: UploadFile):  
-    file_path = save_file(file)  
-    process_pdf.delay(file_path)  
-    return {"status": "Processing started"}  
-```
+- [OpenAI API setup](https://platform.openai.com/docs/api-reference/introduction)
+- [n8n OpenAI integration](https://docs.n8n.io/integrations/builtin/credentials/openai/)
 
-## 4. Practical Use Case: Customer Support Automation
-**Problem**: Manual ticket triage delays response times by 24+ hours.
-**Solution**:
-- FastAPI endpoint receives support tickets.
-- Celery queues LangChain to classify urgency and draft replies.
-- Human agents review AI-generated drafts via a web dashboard.
+In order to get the best output, refer to this sample image that illustrates how the content is structured:
 
-**Outcome**: 40% faster ticket resolution and 24/7 automation.
+![Prompt Example](https://drive.google.com/uc?id=1F2t5Y9Oa8EVsMQuXKfpuNATRn21XVfw9)
 
-## 5. Best Practices
+### **3. Edit Your Content**
 
-### Data Pipelines
-- Use chunking/streaming for large files (avoid OOM errors).
-- Cache frequent requests with Redis/Memcached.
-- Validate inputs with Pydantic models.
+**What it does**: Lets you tweak the AI’s draft to match your voice.\
+**Example**: Change formal phrases like *"One may consider"* to *"You should totally try..."*\
+**Why are we using this**: Because ChatGPT may hallucinate or provide inaccurate information, so this editing step ensures high-quality content.
 
-### API Integration
-- Add auth via OAuth2/JWT in FastAPI.
-- Use webhooks to notify clients of task completion.
-- Rate-limit endpoints to prevent abuse.
+### **4. Split Content for Sharing**
 
-### Error Handling
-- Implement Celery retries for flaky tasks (e.g., API timeouts).
-- Log errors to centralized services (Sentry, Datadog).
-- Use dead-letter queues for failed tasks.
+**What it does**: Breaks your blog into bite-sized pieces for social media, emails, etc.\
+**How and Why are we doing this:** Content is divided for both **Slack** and **Notion** to streamline distribution.
 
-## 6. Common Pitfalls & Fixes
+### **5. Notify Your Team on Slack**
 
-### Task Timeouts
-- **Risk**: PDF parsing crashes due to large files.
-- **Fix**: Set task timeouts and use LangChain's lazy loading.
+**What it does**: Sends a Slack message when the blog is ready.\
+**How can we achieve this:** Follow the [Slack setup guide](https://docs.n8n.io/integrations/builtin/credentials/slack/) for steps to create a channel, app, OAuth ID, and scopes to connect Slack with n8n.
 
-### API Rate Limits
-- **Risk**: OpenAI API rejects requests during peak loads.
-- **Fix**: Add exponential backoff in Celery tasks.
+![Slack Example](https://drive.google.com/uc?id=1QUHagGH-AxUagH0uesBsXkYyGOWavuzg)
 
-### Data Leaks
-- **Risk**: Sensitive PDFs exposed in unsecured storage.
-- **Fix**: Encrypt files at rest (AWS S3 SSE) and mask PII with spaCy.
+### **6. Organize in Notion**
 
-## 7. Deployment Tools
-- **Docker**: Containerize FastAPI + Celery workers.
-- **Kubernetes**: Scale workers dynamically based on queue size.
-- **Flower**: Monitor Celery tasks via a dashboard.
+**What it does**: Saves your blog details (title, tags, publish date) in a Notion database.\
+**How does this work:** Follow this [Notion setup guide](https://docs.n8n.io/integrations/builtin/credentials/notion/) to connect your Notion workspace with n8n.
 
-## Conclusion
-Building AI automation requires balancing speed, scalability, and reliability. By combining FastAPI (API layer), Celery (task queue), and LangChain (AI logic), teams can deploy workflows that handle real-world complexity. Start with small pilots (e.g., PDF summarization) and incrementally add error handling and monitoring.
+### **7. Add Custom Magic with Code**
+
+**What it does**: Runs scripts for advanced tasks.\
+**How does this help:** Upon success, this step triggers a status code `200` to confirm completion and sends an email to subscribers. It also uses an OpenAI agent to notify that new content is available with a link for readers. Follow Steps 1 and 2 to set this up.
+
+### **8. Email Your Subscribers**
+
+**What it does**: Sends personalized emails to your audience.\
+**How does this work:** Like Google Sheets integration, add a Gmail node in n8n and configure your account for email automation.
+
+Now our workflow is ready to send content models.
+
+## **Full Workflow in Action** 🎮
+
+1. Add a blog idea to **Google Sheets** → triggers the workflow.
+2. **OpenAI** writes the draft → you edit it.
+3. **Split** the content into social posts, emails, etc.
+4. Get team feedback via **Slack**.
+5. Log the blog in **Notion**.
+6. Use **Code** for extra automation.
+7. Send the final piece to subscribers via **Gmail**.
+
+## **Why You’ll Love It**
+
+- **Effortless**: Focus on creativity while AI handles the heavy lifting.
+- **Scalable**: Go from 1 blog/month to 10 blogs/week.
+- **Trendy**: Perfect for Gen-Z creators who love tech and side hustles.
+
