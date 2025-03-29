@@ -47,16 +47,24 @@ function extractSummary(content) {
 
 // Extract tags from content
 function extractTags(content) {
-  const tags = new Set();
+  // First, try to find a dedicated tags section
+  const tagsSection = content.match(/## Tags\s+([^#]+)/);
+  if (tagsSection) {
+    // Extract tags from the dedicated section
+    const tagList = tagsSection[1].trim().split('\n')
+      .map(line => line.replace(/^\s*-\s*/, '').trim()) // Remove list markers
+      .filter(tag => tag.length > 0);
+    return Array.from(new Set(tagList));
+  }
   
-  // Look for tags in the content
-  const tagMatches = content.match(/\*\*(.+?)\*\*/g) || [];
-  tagMatches.forEach(match => {
-    const tag = match.replace(/\*\*/g, '');
-    if (tag.length > 0) tags.add(tag);
-  });
+  // If no dedicated section, look for hashtags
+  const hashtagMatches = content.match(/#[a-zA-Z]\w+/g) || [];
+  if (hashtagMatches.length > 0) {
+    return Array.from(new Set(hashtagMatches));
+  }
   
-  return Array.from(tags);
+  // Default tags if none found
+  return ['Uncategorized'];
 }
 
 // Read all markdown files and convert to JSON
@@ -92,26 +100,35 @@ function updateBlogPosts() {
       // Get existing post data if available
       const existingPost = existingPostsMap.get(slug) || {};
       
-      // Extract metadata from content if no frontmatter
-      const title = data.title || extractTitle(content);
-      const summary = data.summary || extractSummary(content);
-      const tags = data.tags || extractTags(content);
+      // Use frontmatter tags if available, otherwise extract from content
+      const tags = data.tags || existingPost.tags || extractTags(content);
       
       // Convert markdown to HTML
       const htmlContent = marked.parse(content);
       
       return {
         id: existingPost.id || index + 1,
-        title: title,
-        summary: summary,
+        title: data.title || extractTitle(content),
+        summary: data.summary || extractSummary(content),
         date: data.date || existingPost.date || new Date().toLocaleDateString('en-US', { 
           year: 'numeric', 
           month: 'long', 
           day: 'numeric' 
         }),
+        readTime: data.readTime || existingPost.readTime || `${Math.ceil(content.split(/\s+/).length / 200)} min read`,
         imageUrl: data.imageUrl || existingPost.imageUrl || '',
         slug: slug,
         tags: tags,
+        filters: data.filters || existingPost.filters || {
+          category: data.category || 'Uncategorized',
+          difficulty: data.difficulty || 'Beginner',
+          topics: data.topics || [],
+          tools: data.tools || []
+        },
+        meta: data.meta || existingPost.meta || {
+          type: data.type || 'Article',
+          keywords: data.keywords || tags
+        },
         content: htmlContent,
         targetAudience: data.targetAudience || existingPost.targetAudience || []
       };
