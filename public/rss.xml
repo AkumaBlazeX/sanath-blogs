@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Sanath Blogs - Data Science &amp; AI Automation Insights</title>
+    <link>https://www.sanathblogs.site</link>
+    <description>Expert insights on Data Science, AI automation, and machine learning by Sanath Kumar. Discover practical guides and tutorials on automation workflows and data analysis.</description>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 21 Mar 2024 00:00:00 GMT</lastBuildDate>
+    <atom:link href="https://www.sanathblogs.site/rss.xml" rel="self" type="application/rss+xml"/>
+    <image>
+      <url>https://www.sanathblogs.site/images/logo-black.png</url>
+      <title>Sanath Blogs</title>
+      <link>https://www.sanathblogs.site</link>
+    </image>
+    
+    <!-- Example blog post - Update with your actual blog posts -->
+    <item>
+      <title>Automation with n8n: A Comprehensive Guide</title>
+      <link>https://www.sanathblogs.site/#/blog/automation-with-n8n</link>
+      <guid>https://www.sanathblogs.site/#/blog/automation-with-n8n</guid>
+      <pubDate>Thu, 21 Mar 2024 00:00:00 GMT</pubDate>
+      <description>
+        <![CDATA[
+          Learn how to automate your workflows using n8n, a powerful open-source automation tool. 
+          This comprehensive guide covers everything from basic setup to advanced automation techniques.
+        ]]>
+      </description>
+      <category>Automation</category>
+      <category>n8n</category>
+      <category>Workflow</category>
+    </item>
+  </channel>
+</rss> 

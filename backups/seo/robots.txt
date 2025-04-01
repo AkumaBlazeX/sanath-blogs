@@ -1,0 +1,42 @@
+# www.robotstxt.org/
+
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://www.sanathblogs.site/sitemap.xml
+
+# Disallow admin and private areas if they exist
+Disallow: /admin/
+Disallow: /private/
+Disallow: /api/
+
+# Allow crawling of static assets
+Allow: /static/
+Allow: /images/
+Allow: /css/
+Allow: /js/
+
+# Crawl-delay to prevent server overload
+Crawl-delay: 10
+
+# Allow crawling of all content
+Allow: /blog/
+Allow: /home/
+Allow: /*.js
+Allow: /*.css
+Allow: /*.png
+Allow: /*.jpg
+Allow: /*.gif
+Allow: /*.svg
+Allow: /*.ico
+
+# Prevent crawling of error pages
+Disallow: /404
+Disallow: /500
+
+# Allow images to be indexed
+Allow: /*.png$
+Allow: /*.jpg$
+Allow: /*.gif$
+Allow: /*.jpeg$
