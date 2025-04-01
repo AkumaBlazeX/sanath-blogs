@@ -8,6 +8,7 @@ import { Clock, Share2 } from 'lucide-react';
 import { toast } from 'sonner';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
+import SEO from '../components/SEO';
 
 interface RouteParams {
   slug: string;
@@ -162,6 +163,16 @@ const BlogPost: React.FC = () => {
 
   return (
     <PageTransition>
+      {post && (
+        <SEO
+          title={`${post.title} - Sanath's Blog`}
+          description={post.summary}
+          image={post.imageUrl}
+          article={true}
+          publishedTime={new Date(post.date).toISOString()}
+          tags={post.tags}
+        />
+      )}
       <div className="container-custom">
         {loading ? (
           // Loading state

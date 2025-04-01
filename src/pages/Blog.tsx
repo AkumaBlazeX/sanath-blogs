@@ -3,6 +3,7 @@ import BlogCard from '../components/BlogCard';
 import PageTransition from '../components/PageTransition';
 import blogPosts from '../data/blogPosts.json';
 import { Pagination, PaginationContent, PaginationEllipsis, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from "@/components/ui/pagination";
+import SEO from '../components/SEO';
 
 const Blog: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -131,6 +132,10 @@ const Blog: React.FC = () => {
 
   return (
     <PageTransition>
+      <SEO
+        title="Blog - Data Science & AI Automation Insights | Sanath's Blog"
+        description="Explore expert articles on Data Science, AI automation, machine learning, and more. Find practical guides and tutorials for modern development workflows."
+      />
       <div className="container-custom">
         {/* Header Section */}
         <section className="py-12 md:py-20">
