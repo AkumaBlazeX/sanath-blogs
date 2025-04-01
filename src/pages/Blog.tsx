@@ -22,10 +22,7 @@ const Blog: React.FC = () => {
     const matchesSearch = searchTerm === '' || 
       post.title.toLowerCase().includes(searchTerm.toLowerCase()) || 
       post.summary.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      (post.meta?.keywords?.some(keyword => 
-        keyword.toLowerCase().includes(searchTerm.toLowerCase())
-      )) ||
-      (post.content?.toLowerCase().includes(searchTerm.toLowerCase())) ||
+      post.content?.toLowerCase().includes(searchTerm.toLowerCase()) ||
       (post.tags?.some(tag => 
         tag.toLowerCase().includes(searchTerm.toLowerCase())
       ));
@@ -183,40 +180,6 @@ const Blog: React.FC = () => {
                   </svg>
                 </button>
               )}
-            </div>
-            
-            {/* Tags */}
-            <div className="flex flex-wrap justify-center gap-2 mb-8">
-              <button
-                onClick={() => {
-                  setSelectedTag(null);
-                  setCurrentPage(1); // Reset to page 1 on tag change
-                }}
-                className={`px-3 py-1 rounded-full text-sm ${
-                  selectedTag === null
-                    ? 'bg-primary text-primary-foreground'
-                    : 'bg-secondary text-secondary-foreground hover:bg-secondary/70'
-                } transition-colors`}
-              >
-                All
-              </button>
-              
-              {allTags.map(tag => (
-                <button
-                  key={tag}
-                  onClick={() => {
-                    setSelectedTag(tag);
-                    setCurrentPage(1); // Reset to page 1 on tag change
-                  }}
-                  className={`px-3 py-1 rounded-full text-sm ${
-                    selectedTag === tag
-                      ? 'bg-primary text-primary-foreground'
-                      : 'bg-secondary text-secondary-foreground hover:bg-secondary/70'
-                  } transition-colors`}
-                >
-                  {tag}
-                </button>
-              ))}
             </div>
           </div>
         </section>
