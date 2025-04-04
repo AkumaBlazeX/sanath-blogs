@@ -38,7 +38,6 @@ const BlogPost: React.FC = () => {
   const [post, setPost] = useState<BlogPost | null>(null);
   const [loading, setLoading] = useState(true);
   const [relatedPosts, setRelatedPosts] = useState<BlogPost[]>([]);
-  const [markdownContent, setMarkdownContent] = useState<string | null>(null);
   
   // Function to convert Google Drive view URLs to direct image URLs and handle Supabase URLs
   const getProcessedImageUrl = (url: string) => {
@@ -77,34 +76,8 @@ const BlogPost: React.FC = () => {
         .slice(0, 3); // Limit to 3 related posts
       
       setRelatedPosts(related);
-      
-      // Load markdown content from the correct path
-      fetch(`/src/data/markdown/${slug}.md`)
-        .then(response => {
-          if (!response.ok) {
-            throw new Error('Markdown file not found');
-          }
-          return response.text();
-        })
-        .then(markdown => {
-          // Replace Google Drive image URLs in markdown
-          const processedMarkdown = markdown.replace(
-            /!\[([^\]]+)\]\((https:\/\/drive\.google\.com\/file\/d\/[^\/]+\/[^\)]+)\)/g,
-            (match, altText, url) => {
-              return `![${altText}](${getProcessedImageUrl(url)})`;
-            }
-          );
-          setMarkdownContent(processedMarkdown);
-        })
-        .catch(error => {
-          console.error('Error loading markdown:', error);
-          // Fallback to HTML content if markdown doesn't exist
-          setMarkdownContent(null);
-        })
-        .finally(() => {
-          setPost(processedPost);
-          setLoading(false);
-        });
+      setPost(processedPost);
+      setLoading(false);
     } else {
       setPost(null);
       setLoading(false);
@@ -224,9 +197,7 @@ const BlogPost: React.FC = () => {
                     <div className="flex items-center">
                       <Clock className="h-4 w-4 mr-1" />
                       <span className="text-sm">
-                        {post.readTime || (markdownContent 
-                          ? getReadingTime(markdownContent) 
-                          : getReadingTime(post.content)) + ' min read'}
+                        {post.readTime || getReadingTime(post.content) + ' min read'}
                       </span>
                     </div>
                     
@@ -275,15 +246,15 @@ const BlogPost: React.FC = () => {
               
               {/* Post content */}
               <div className="blog-content prose prose-lg max-w-none">
-                {markdownContent ? (
+                {post.content.startsWith('<') ? (
+                  <div dangerouslySetInnerHTML={{ __html: post.content }} />
+                ) : (
                   <ReactMarkdown 
                     remarkPlugins={[remarkGfm]}
                     components={MarkdownComponents}
                   >
-                    {markdownContent}
+                    {post.content}
                   </ReactMarkdown>
-                ) : (
-                  <div dangerouslySetInnerHTML={{ __html: post.content }} />
                 )}
               </div>
               
