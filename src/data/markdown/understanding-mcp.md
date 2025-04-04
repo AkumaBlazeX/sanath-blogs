@@ -1,91 +1,98 @@
-# Understanding of MCP
+# Understanding MCP (Model Context Protocol)
 
-The evolution of AI has brought us from traditional Large Language Models (LLMs) to more sophisticated systems that can interact with the real world. Let's explore this journey and understand how Manual Control Protocol (MCP) fits into the picture.
+## Introduction
 
-## Evolution of LLMs
+A new term that's been gaining attention in the AI world is **MCP** – **Model Context Protocol**. To understand MCP and its significance, let's first take a quick journey through the evolution of LLMs and how we interact with them today.
 
-LLMs started as powerful text generators but were limited by their training data cutoff and inability to interact with the real world. They could generate text based on patterns in their training data but couldn't access current information or perform real-world actions.
+## 1. The First Evolution: LLMs (Large Language Models)
 
-## RAG Models: A Step Forward
+The first big revolution came with the introduction of **LLMs** – large models trained on massive datasets, giving them what we can imagine as a "big head full of past data". These models are excellent at understanding and generating human-like text.
 
-Retrieval-Augmented Generation (RAG) models improved upon basic LLMs by incorporating the ability to retrieve and reference external information. This allowed them to provide more up-to-date and accurate responses by consulting current data sources.
+https://eetbqplrrpfakagerrag.supabase.co/storage/v1/object/public/blog-images/MCP-Blog-Images/First.png
+*An illustration showing the concept of a large model with vast past knowledge.*
 
-## The Tooling Era
+## 2. RAG Models: Enhancing LLMs
 
-The next evolution came with tool-using LLMs that could interact with external APIs and services. This enabled them to perform actions like:
-- Searching the web
-- Accessing databases
-- Making API calls
-- Manipulating files
-- Running system commands
+Soon after, the concept of **RAG** – **Retrieval-Augmented Generation** – was introduced.  
+RAG means the model first **retrieves** relevant information from an external source, and then **generates** a response based on that, converting it into natural human language.
 
-## Understanding MCP
+This was a game-changer. Companies began feeding LLMs with their own data using RAG pipelines, allowing for dynamic and relevant responses.
 
-Manual Control Protocol (MCP) represents a significant advancement in AI tooling. It provides:
-- A standardized way for LLMs to interact with external tools
-- Clear protocol for tool definitions and usage
-- Structured communication between AI and tools
-- Enhanced safety through user oversight
+## 3. The Tooling Era: Connecting LLMs with Real-World Tools
 
-## Hands-on Example
+As OpenAI and other big players emerged, the next step was **tool integration**.  
+LLMs, by themselves, cannot take actions like reading emails or searching the web. So we started giving them **tools**.
 
-Let's look at how MCP works in practice:
+A great example is the **web search tool** in ChatGPT – it allows the LLM to research current data. Then came platforms like **n8n**, **Make**, and **Zapier**, which enabled integration with 500+ apps.
 
-1. Tool Definition:
-```json
-{
-  "name": "send_email",
-  "description": "Send an email to specified recipient",
-  "parameters": {
-    "to": "string",
-    "subject": "string",
-    "body": "string"
-  }
-}
-```
+However, there were two major limitations for non-technical users:
 
-2. AI Usage:
-```python
-# AI can call tools using structured format
-send_email(
-  to="user@example.com",
-  subject="Hello",
-  body="This is a test email"
-)
-```
+1. **Manual Node Configuration**: Each step or "node" in a workflow needs to be manually described.
+    
+2. **Lack of Adaptability**: If the task changes, the workflow is often not reusable.
 
-## Benefits of MCP
+https://eetbqplrrpfakagerrag.supabase.co/storage/v1/object/public/blog-images/MCP-Blog-Images/Second.jpeg  
+*A workflow showing manual configuration in n8n – e.g., summarizing emails and sending them.*
 
-- Standardized Interface: Common protocol for tool interaction
-- Safety: User approval required for actions
-- Flexibility: Easy to add new tools
-- Transparency: Clear documentation of available actions
-- Reliability: Structured error handling
+## 4. Enter MCP: The Missing Link
 
-## Real-world Applications
+This is where **MCP (Model Context Protocol)** comes in.
 
-MCP enables AI to:
-- Manage email communications
-- Update databases
-- Control IoT devices
-- Process documents
-- Automate workflows
-- Interact with web services
+MCP acts as a **broker between LLMs and tools**, making it easier for the model to know **what to do** and **how to do it**, **without you needing to explicitly define every detail**.
 
-## Best Practices
+https://eetbqplrrpfakagerrag.supabase.co/storage/v1/object/public/blog-images/MCP-Blog-Images/Third.png
+*Architecture of MCP: Tools at the bottom, MCP Server in the middle, and MCP Clients (like you) on top.*  
+(Source: [Norah Sakal's Blog on MCP](https://norahsakal.com/blog/mcp-vs-api-model-context-protocol-explained/))
 
-When working with MCP:
-1. Always document tool capabilities clearly
-2. Implement proper error handling
-3. Consider security implications
-4. Test tool interactions thoroughly
-5. Monitor tool usage and performance
+### Before MCP:
 
-## Future Potential
+> If you asked an LLM: "Get me the latest emails,"  
+> ❌ It wouldn't know how – it has no access to your Gmail or database.
 
-MCP continues to evolve, promising:
-- More sophisticated tool interactions
-- Enhanced safety mechanisms
-- Broader tool ecosystems
-- Improved standardization
-- Greater automation capabilities 
+### After MCP:
+
+> You ask: "Get me the latest emails."  
+> ✅ The MCP server routes this request to the right tool (like Gmail), retrieves the data, and the LLM uses that to respond.  
+> And **you**, the client, remain in full control.
+
+This architecture enables tool makers like GitHub, Google, etc., to build **MCP-compatible integrations**, making things seamless.
+
+## 5. Hands-On Example: Building Your MCP Workflow
+
+Let's build a simple **MCP server** using **Cursor AI** and **Zapier MCP**.
+
+1. Go to the [Zapier Actions Site](https://actions.zapier.com/) and follow the documentation.
+    
+2. Create an MCP project and connect it with Cursor AI.
+    
+3. In your Cursor settings, you'll see your connected MCP (like the image below).
+
+https://eetbqplrrpfakagerrag.supabase.co/storage/v1/object/public/blog-images/MCP-Blog-Images/Fourth.jpeg
+*Zapier MCP connected to Cursor.*
+
+## 6. Adding Actions via Zapier
+
+Next, you can start adding **actions**. For example, connect your Gmail.
+
+https://eetbqplrrpfakagerrag.supabase.co/storage/v1/object/public/blog-images/MCP-Blog-Images/Fifth.jpeg 
+*Gmail added as an action in Zapier.*
+
+Now, inside any Cursor project, you can use natural language like:
+
+> "Send an email to John with this message."
+
+And it will send the email using the pre-defined action.
+
+https://eetbqplrrpfakagerrag.supabase.co/storage/v1/object/public/blog-images/MCP-Blog-Images/Sixth.jpeg
+*A test example in Cursor where an email was sent just by using natural language.*
+
+## 7. Final Output
+
+https://eetbqplrrpfakagerrag.supabase.co/storage/v1/object/public/blog-images/MCP-Blog-Images/Seventh.jpeg
+*Screenshot of the email received as a meeting reminder – triggered by MCP through Cursor.*
+
+## Conclusion
+
+MCP is still in its **early stages**, but it has the potential to transform how we interact with AI and tools. Instead of coding or manually describing workflows, we can now just talk to our AI agent — and it will **understand, retrieve, and act**.
+
+We believe that in the coming years, companies across the globe will embrace MCP to offer seamless integration between their APIs and AI interfaces.
