@@ -1,3 +1,4 @@
+import React, { Suspense } from 'react';
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -16,6 +17,7 @@ import TermsOfService from "./pages/TermsOfService";
 import ImageUploadPage from "./pages/ImageUploadPage";
 import { AnimatePresence } from "framer-motion";
 import Favicon from "./components/Favicon";
+import Loading from '@/components/Loading';
 
 const queryClient = new QueryClient();
 
@@ -34,17 +36,19 @@ const App = () => (
           <Sonner />
           <Layout>
             <AnimatePresence mode="wait">
-              <Routes>
-                <Route path="/" element={<Navigate to="/home" replace />} />
-                <Route path="/landing" element={<Index />} />
-                <Route path="/home" element={<Home />} />
-                <Route path="/blog" element={<Blog />} />
-                <Route path="/blog/:slug" element={<BlogPost />} />
-                <Route path="/images" element={<ImageUploadPage />} />
-                <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-                <Route path="/terms-of-service" element={<TermsOfService />} />
-                <Route path="*" element={<NotFound />} />
-              </Routes>
+              <Suspense fallback={<Loading />}>
+                <Routes>
+                  <Route path="/" element={<Navigate to="/home" replace />} />
+                  <Route path="/landing" element={<Index />} />
+                  <Route path="/home" element={<Home />} />
+                  <Route path="/blog" element={<Blog />} />
+                  <Route path="/blog/:slug" element={<BlogPost />} />
+                  <Route path="/images" element={<ImageUploadPage />} />
+                  <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+                  <Route path="/terms-of-service" element={<TermsOfService />} />
+                  <Route path="*" element={<NotFound />} />
+                </Routes>
+              </Suspense>
             </AnimatePresence>
           </Layout>
         </HashRouter>
