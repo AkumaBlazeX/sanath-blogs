@@ -45,6 +45,9 @@ export default defineConfig(({ mode }) => ({
           if (/png|jpe?g|svg|gif|tiff|bmp|ico/i.test(extType)) {
             return `assets/img/[name]-[hash][extname]`;
           }
+          if (extType === 'css') {
+            return `assets/css/[name]-[hash][extname]`;
+          }
           return `assets/${extType}/[name]-[hash][extname]`;
         },
         chunkFileNames: 'assets/js/[name]-[hash].js',
