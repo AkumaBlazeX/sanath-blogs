@@ -2,7 +2,7 @@
 title: "Blog Automation Workflow for Gen-Z Creators"
 summary: "Time-Saving: Automate repetitive tasks like content generation and distribution."
 date: "March 29, 2025"
-imageUrl: "https://eetbqplrrpfakagerrag.supabase.co/storage/v1/object/public/blog-images//image.jpeg"
+imageUrl: "https://eetbqplrrpfakagerrag.supabase.co/storage/v1/object/public/blog-images//WhatsApp%20Image%202025-03-29%20at%209.14.21%20AM.jpeg"
 tags:
   - "Automation"
   - "AI"
@@ -75,7 +75,7 @@ In order to get the best output, refer to this sample image that illustrates how
 **What it does**: Sends a Slack message when the blog is ready.
 **How can we achieve this:** Follow the [Slack setup guide](https://docs.n8n.io/integrations/builtin/credentials/slack/) for steps to create a channel, app, OAuth ID, and scopes to connect Slack with n8n.
 
-![Slack Example](https://eetbqplrrpfakagerrag.supabase.co/storage/v1/object/public/blog-images/Blog-2/Slack.jpeg)
+![Slack Example](https://eetbqplrrpfakagerrag.supabase.co/storage/v1/object/public/blog-images/Slack.jpeg)
 
 ### 6. Organize in Notion
 
@@ -109,4 +109,3 @@ Now our workflow is ready to send content models.
 - **Effortless**: Focus on creativity while AI handles the heavy lifting.
 - **Scalable**: Go from 1 blog/month to 10 blogs/week.
 - **Trendy**: Perfect for Gen-Z creators who love tech and side hustles.
-
