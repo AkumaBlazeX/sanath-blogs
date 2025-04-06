@@ -1,80 +1,62 @@
 # Supabase Welcome Email Function
 
-This Edge Function sends a welcome email to new subscribers using Resend.
+This Edge Function sends a welcome email to new subscribers using Resend with a verified domain.
 
-## Setup Instructions
+## Configuration
 
-### 1. Install Supabase CLI
+The function is currently configured to:
+- Send emails from `team@sanathblogs.site` (verified domain)
+- Send welcome emails to all subscribers
+- Update the subscription record once the email is sent
 
-If you haven't already, install the Supabase CLI:
+## Deployment
 
-```bash
-npm install -g supabase
-```
-
-### 2. Login to Supabase
-
-```bash
-supabase login
-```
-
-### 3. Set up Resend API Key
-
-1. Create a free account at [Resend](https://resend.com)
-2. Get your API key from the dashboard
-
-### 4. Set Environment Variables
-
-Add your Resend API key as a secret in Supabase:
+To deploy or update this function:
 
 ```bash
-supabase secrets set RESEND_API_KEY=your_resend_api_key
+supabase functions deploy welcome-email
 ```
 
-### 5. Deploy the Edge Function
+## Environment Variables
 
-```bash
-supabase functions deploy welcome-email --no-verify-jwt
-```
+The function requires the following environment variables:
+- `RESEND_API_KEY`: Your Resend API key
+- `SUPABASE_URL`: Your Supabase project URL (set automatically)
+- `SUPABASE_SERVICE_ROLE_KEY`: Your Supabase service role key (set automatically)
 
-The `--no-verify-jwt` flag allows the function to be called with just the anon key.
+## Testing
 
-### 6. Add welcome_email_sent column to subscriptions table
-
-Run this SQL in your Supabase dashboard:
-
-```sql
-ALTER TABLE subscriptions ADD COLUMN IF NOT EXISTS welcome_email_sent BOOLEAN DEFAULT FALSE;
-```
-
-### 7. Test the Function
-
-You can test it using curl:
+You can test the function using the Supabase dashboard or with curl:
 
 ```bash
 curl -X POST https://eetbqplrrpfakagerrag.supabase.co/functions/v1/welcome-email \
   -H "Content-Type: application/json" \
-  -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVldGJxcGxycnBmYWthZ2VycmFnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDMxNTQ1NDksImV4cCI6MjA1ODczMDU0OX0.br1pugBZLUCTNoYHy5dS5dj4um7wYzwAsWpNmrnmInI" \
-  -d '{"email":"test@example.com"}'
+  -H "Authorization: Bearer SUPABASE_ANON_KEY" \
+  -d '{"email":"your-email@example.com"}'
 ```
 
-## Configuration Details
+## Email Template
 
-This function uses:
-- **Resend's sandbox domain** (`onboarding@resend.dev`) for sending emails
-- Replies go to the automated email: `automated.mail.hadoop4211@gmail.com`
-- Marks subscriptions as processed in the Supabase database
+The current email template includes:
+- A welcome message
+- List of content types subscribers will receive
+- Link to the blog
+- Contact information
 
-## How It Works
+To modify the template, edit the HTML in the `html` section of the code.
 
-1. When a user subscribes via the FooterSubscribeForm component
-2. The function sends a welcome email via Resend
-3. The function updates the subscriber record to mark the welcome email as sent
+## Domain Verification
 
-## Upgrading to a Custom Domain
+The domain `sanathblogs.site` has been fully verified with Resend, allowing emails to be sent from `team@sanathblogs.site`.
 
-When your domain verification is complete, you can update the `from` field in the function to use your custom domain. Domain verification can be completed by:
+DNS records that were set up:
+- MX Record
+- SPF Record
+- DKIM Record
+- DMARC Record
 
-1. Adding the required DNS records in Namecheap
-2. Waiting for verification to complete
-3. Updating the `from` field to use your verified domain 
+## Future Improvements
+
+- Create reusable email templates
+- Add analytics tracking for open rates
+- Implement newsletters and blog post notifications 
