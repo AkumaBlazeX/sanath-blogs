@@ -1,1 +1,4 @@
 project_id = "eetbqplrrpfakagerrag"
+
+[global.env_variables]
+RESEND_API_KEY = ""

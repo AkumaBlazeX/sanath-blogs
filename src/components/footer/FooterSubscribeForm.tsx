@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -19,15 +18,40 @@ const FooterSubscribeForm: React.FC = () => {
     }
   }, []);
 
+  const sendWelcomeEmail = async (email: string) => {
+    try {
+      // Use the anon key from the Supabase URL
+      const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVldGJxcGxycnBmYWthZ2VycmFnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDMxNTQ1NDksImV4cCI6MjA1ODczMDU0OX0.br1pugBZLUCTNoYHy5dS5dj4um7wYzwAsWpNmrnmInI';
+      
+      const response = await fetch('https://eetbqplrrpfakagerrag.supabase.co/functions/v1/welcome-email', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${SUPABASE_ANON_KEY}`
+        },
+        body: JSON.stringify({ email })
+      });
+      
+      if (!response.ok) {
+        console.error('Failed to send welcome email:', await response.text());
+      } else {
+        console.log('Welcome email sent successfully!');
+      }
+    } catch (error) {
+      console.error('Error sending welcome email:', error);
+    }
+  };
+
   const handleSubscribe = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
 
     try {
       // Store the subscription in Supabase
-      const { error } = await supabase
+      const { error, data } = await supabase
         .from('subscriptions')
-        .insert([{ email }]);
+        .insert([{ email }])
+        .select();
 
       if (error) {
         if (error.code === '23505') { // Unique constraint violation
@@ -48,6 +72,10 @@ const FooterSubscribeForm: React.FC = () => {
           title: "Successfully subscribed!",
           description: "Thank you for subscribing to our newsletter.",
         });
+        
+        // Send welcome email
+        await sendWelcomeEmail(email);
+        
         setEmail('');
       }
     } catch (error: any) {
