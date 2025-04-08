@@ -24,18 +24,18 @@ targetAudience:
 
 
 
-Natural Language Processing (NLP) has revolutionized the way machines understand and respond to human language. From powering intelligent assistants to helping researchers sift through vast amounts of text, NLP stands at the intersection of linguistics, data, and AI. In this blog, we’ll unpack some of the most essential building blocks of NLP—from foundational preprocessing techniques to cutting-edge models like RAG. Whether you're a beginner or brushing up your skills, this guide will give you an in-depth understanding of how language is interpreted by machines.
+Natural Language Processing (NLP) has revolutionized the way machines understand and respond to human language. From powering intelligent assistants to helping researchers sift through vast amounts of text, NLP stands at the intersection of linguistics, data, and AI. In this blog, we'll unpack some of the most essential building blocks of NLP—from foundational preprocessing techniques to cutting-edge models like RAG. Whether you're a beginner or brushing up your skills, this guide will give you an in-depth understanding of how language is interpreted by machines.
 
 ## Stemming and Lemmatization
 
-One of the first steps in processing text is simplifying it. But simplification isn’t just about removing words—it’s about distilling them to their most meaningful forms.
+One of the first steps in processing text is simplifying it. But simplification isn't just about removing words—it's about distilling them to their most meaningful forms.
 
 **Stemming** is a rule-based process that chops off prefixes or suffixes to reduce words to their "root" form. However, these roots may not always be valid dictionary words. For instance, the word `flies` might be stemmed to `fli`, which isn't meaningful on its own but computationally efficient.  
 **Lemmatization**, on the other hand, takes context into account and converts words into their **base or dictionary form**, preserving their grammatical meaning. So `flies` becomes `fly`, and `running` becomes `run`, both of which are valid.
 
 > ⚠️ **Tip:** Use stemming for high-speed, large-volume tasks, and lemmatization for tasks where accuracy matters more—like sentiment analysis or chatbot response generation.
 
-[Image 1](https://eetbqplrrpfakagerrag.supabase.co/storage/v1/object/public/blog-images/Blog-5/1.jpeg)
+![Image 1](https://eetbqplrrpfakagerrag.supabase.co/storage/v1/object/public/blog-images/Blog-5/1.jpeg)
 A side-by-side table of stemming vs lemmatization with input/output examples.
 
 ## Tokenization: Breaking Language into Building Blocks
@@ -51,9 +51,9 @@ Before we can analyze text, we must **split it into manageable pieces**. Tokeniz
 
 This granularity helps models generalize better, especially across different languages and technical terms.
 
-[image 2.1](https://eetbqplrrpfakagerrag.supabase.co/storage/v1/object/public/blog-images/Blog-5/2.1.jpeg)
-[image 2.2](https://eetbqplrrpfakagerrag.supabase.co/storage/v1/object/public/blog-images/Blog-5/2.2.jpeg)
-[image 2.3](https://eetbqplrrpfakagerrag.supabase.co/storage/v1/object/public/blog-images/Blog-5/2.3.jpeg)
+![image 2.1](https://eetbqplrrpfakagerrag.supabase.co/storage/v1/object/public/blog-images/Blog-5/2.1.jpeg)
+![image 2.2](https://eetbqplrrpfakagerrag.supabase.co/storage/v1/object/public/blog-images/Blog-5/2.2.jpeg)
+![image 2.3](https://eetbqplrrpfakagerrag.supabase.co/storage/v1/object/public/blog-images/Blog-5/2.3.jpeg)
 Visual of tokenization types: sentence, word, subword, character.
 
 
@@ -72,8 +72,8 @@ CopyEdit
 
 This vector math reveals how embeddings **capture meaning, gender, context, and even analogies**, all in high-dimensional space. These representations are learned using algorithms like Word2Vec, GloVe, or are directly baked into modern models like BERT.
 
-[image3.1](https://eetbqplrrpfakagerrag.supabase.co/storage/v1/object/public/blog-images/Blog-5/3.1.jpeg)
-[image3.2](https://eetbqplrrpfakagerrag.supabase.co/storage/v1/object/public/blog-images/Blog-5/3.2.jpeg)
+![image3.1](https://eetbqplrrpfakagerrag.supabase.co/storage/v1/object/public/blog-images/Blog-5/3.1.jpeg)
+![image3.2](https://eetbqplrrpfakagerrag.supabase.co/storage/v1/object/public/blog-images/Blog-5/3.2.jpeg)
 2D projection of word embeddings showing clusters (e.g., royal terms together, sports terms together).
 
 
@@ -81,20 +81,20 @@ This vector math reveals how embeddings **capture meaning, gender, context, and 
 
 When we read a sentence, we instinctively **focus more on certain words** depending on context. The **attention mechanism** brings this human-like prioritization to machine learning.
 
-It works by **assigning importance weights** to different words in the input based on their relevance to each other. For instance, in the sentence “The cat is jumping high,” attention might focus more on “cat” and “jumping” than on “the” or “is”.
+It works by **assigning importance weights** to different words in the input based on their relevance to each other. For instance, in the sentence "The cat is jumping high," attention might focus more on "cat" and "jumping" than on "the" or "is".
 
 This mechanism powers many breakthroughs in NLP because it allows models to dynamically emphasize important parts of the input.
 
-[image4.1](https://eetbqplrrpfakagerrag.supabase.co/storage/v1/object/public/blog-images/Blog-5/4.1.jpeg)
-[image4.2](https://eetbqplrrpfakagerrag.supabase.co/storage/v1/object/public/blog-images/Blog-5/4.2.jpeg)
-[image4.3](https://eetbqplrrpfakagerrag.supabase.co/storage/v1/object/public/blog-images/Blog-5/4.3.jpeg)
+![image4.1](https://eetbqplrrpfakagerrag.supabase.co/storage/v1/object/public/blog-images/Blog-5/4.1.jpeg)
+![image4.2](https://eetbqplrrpfakagerrag.supabase.co/storage/v1/object/public/blog-images/Blog-5/4.2.jpeg)
+![image4.3](https://eetbqplrrpfakagerrag.supabase.co/storage/v1/object/public/blog-images/Blog-5/4.3.jpeg)
 A heatmap showing attention weights across words in a sentence.
 
 ## Transformers: The Brains Behind Modern NLP
 
 Before transformers, models processed words **sequentially**, which made understanding long-term dependencies hard. Transformers **look at the entire sentence at once**, analyzing relationships between every word pair.
 
-Here’s how they work:
+Here's how they work:
 
 1. **Embeddings + Positional Encoding**: Each word is turned into a vector and tagged with its position.
     
@@ -103,9 +103,9 @@ Here’s how they work:
 3. **Feed-forward Layers**: These layers refine the understanding at deeper levels.
     
 
-This parallel architecture is what powers today’s NLP superstars like BERT, GPT, and T5. It's **fast, context-aware**, and scales beautifully.
+This parallel architecture is what powers today's NLP superstars like BERT, GPT, and T5. It's **fast, context-aware**, and scales beautifully.
 
-[image5](https://eetbqplrrpfakagerrag.supabase.co/storage/v1/object/public/blog-images/Blog-5/5.jpeg)
+![image5](https://eetbqplrrpfakagerrag.supabase.co/storage/v1/object/public/blog-images/Blog-5/5.jpeg)
 Diagram of transformer architecture with embedding, attention, and output layers.
 
 ## Measuring Text Similarity
@@ -121,7 +121,7 @@ Understanding how similar two pieces of text are is crucial for applications lik
 
 Each has its use cases, but cosine similarity tends to dominate in NLP tasks involving embeddings.
 
-[image6](https://eetbqplrrpfakagerrag.supabase.co/storage/v1/object/public/blog-images/Blog-5/6.jpeg)
+![image6](https://eetbqplrrpfakagerrag.supabase.co/storage/v1/object/public/blog-images/Blog-5/6.jpeg)
 Geometric visualization comparing cosine similarity and Euclidean distance.
 
 ## Information Retrieval: Finding What Matters
@@ -139,7 +139,7 @@ It involves:
 
 > 🧠 **Tip:** Strong retrieval = faster, more accurate results.
 
-[image7](https://eetbqplrrpfakagerrag.supabase.co/storage/v1/object/public/blog-images/Blog-5/7.jpeg)
+![image7](https://eetbqplrrpfakagerrag.supabase.co/storage/v1/object/public/blog-images/Blog-5/7.jpeg)
 Diagram of IR pipeline: query ➝ document store ➝ ranked results.
 
 ## Retrieval Models in RAG (Retrieval-Augmented Generation)
@@ -158,18 +158,18 @@ Diagram of IR pipeline: query ➝ document store ➝ ranked results.
 - **BM25** builds on TF-IDF with tuning for document length and term saturation.
     
 
-> Example: The term “warming” might be common in a climate document set, but it’ll get higher relevance when paired with unique query contexts.
+> Example: The term "warming" might be common in a climate document set, but it'll get higher relevance when paired with unique query contexts.
 
 ### Dense Retrieval
 
 Dense models like **DPR (Dense Passage Retrieval)** learn to map questions and answers into the same vector space using embeddings. Even if the words differ, they can still match on meaning.
 
-[image8](https://eetbqplrrpfakagerrag.supabase.co/storage/v1/object/public/blog-images/Blog-5/8.jpeg)
+![image8](https://eetbqplrrpfakagerrag.supabase.co/storage/v1/object/public/blog-images/Blog-5/8.jpeg)
 Dual-encoder DPR architecture: one for query, one for documents.
 
 ## Generative Models: Crafting Human-like Answers
 
-Once information is retrieved, **generative models** like GPT step in. They don’t just copy—they create. Given retrieved documents and a prompt, they generate **fluent, coherent, and informative responses**.
+Once information is retrieved, **generative models** like GPT step in. They don't just copy—they create. Given retrieved documents and a prompt, they generate **fluent, coherent, and informative responses**.
 
 - **Coherence** ensures every sentence fits logically
     
@@ -180,7 +180,7 @@ Once information is retrieved, **generative models** like GPT step in. They don�
 
 This phase is crucial in making responses sound natural and complete.
 
-[image9](https://eetbqplrrpfakagerrag.supabase.co/storage/v1/object/public/blog-images/Blog-5/9.jpeg)
+![image9](https://eetbqplrrpfakagerrag.supabase.co/storage/v1/object/public/blog-images/Blog-5/9.jpeg)
 Flow of generation from prompt to context to final answer.
 
 ## RAG Pipeline: Factual, Fast, and Fluent
@@ -200,5 +200,5 @@ Putting it all together:
 
 This combination ensures not only relevance but also **depth and clarity**—ideal for research, customer support, and education.
 
-[image10](https://eetbqplrrpfakagerrag.supabase.co/storage/v1/object/public/blog-images/Blog-5/10.jpeg)
+![image10](https://eetbqplrrpfakagerrag.supabase.co/storage/v1/object/public/blog-images/Blog-5/10.jpeg)
 Full RAG workflow chart with arrows from input ➝ retrieval ➝ ranking ➝ generation ➝ output.
