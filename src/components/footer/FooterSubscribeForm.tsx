@@ -1,87 +1,65 @@
-import React, { useState, useEffect } from 'react';
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { useToast } from "@/hooks/use-toast";
-import { supabase } from "@/integrations/supabase/client";
+import { useState, useEffect } from 'react';
+import { Mail } from 'lucide-react';
+import { useToast } from '@/hooks/use-toast';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
+import { API_CONFIG } from '@/config/api';
 
-const FooterSubscribeForm: React.FC = () => {
+const FooterSubscribeForm = () => {
   const { toast } = useToast();
   const [email, setEmail] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [hasSubscribed, setHasSubscribed] = useState(false);
+  const [isSubscribed, setIsSubscribed] = useState(false);
 
   useEffect(() => {
-    // Check local storage for subscription
-    const subscribedEmail = localStorage.getItem('subscribedEmail');
-    if (subscribedEmail) {
-      setHasSubscribed(true);
+    const subscribed = localStorage.getItem('isSubscribed') === 'true';
+    const savedEmail = localStorage.getItem('subscribedEmail');
+    if (subscribed && savedEmail) {
+      setIsSubscribed(true);
+      setEmail(savedEmail);
     }
   }, []);
 
-  const sendWelcomeEmail = async (email: string) => {
-    try {
-      // Use the anon key from the Supabase URL
-      const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVldGJxcGxycnBmYWthZ2VycmFnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDMxNTQ1NDksImV4cCI6MjA1ODczMDU0OX0.br1pugBZLUCTNoYHy5dS5dj4um7wYzwAsWpNmrnmInI';
-      
-      const response = await fetch('https://eetbqplrrpfakagerrag.supabase.co/functions/v1/welcome-email', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${SUPABASE_ANON_KEY}`
-        },
-        body: JSON.stringify({ email })
-      });
-      
-      if (!response.ok) {
-        console.error('Failed to send welcome email:', await response.text());
-      } else {
-        console.log('Welcome email sent successfully!');
-      }
-    } catch (error) {
-      console.error('Error sending welcome email:', error);
-    }
-  };
-
-  const handleSubscribe = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
 
     try {
-      // Store the subscription in Supabase
-      const { error, data } = await supabase
-        .from('subscriptions')
-        .insert([{ email }])
-        .select();
+      const response = await fetch(`${API_CONFIG.BASE_URL}/subscribe`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-api-key': API_CONFIG.API_KEY
+        },
+        body: JSON.stringify({
+          template: 'WelcomeEmail',
+          singleEmail: email,
+          data: {
+            blogName: "Sanath's Blog"
+          }
+        })
+      });
 
-      if (error) {
-        if (error.code === '23505') { // Unique constraint violation
-          toast({
-            title: "Already subscribed",
-            description: "This email is already subscribed to our newsletter.",
-          });
-          // Still consider this a success since the email is subscribed
-          setHasSubscribed(true);
-          localStorage.setItem('subscribedEmail', email);
-        } else {
-          throw error;
-        }
-      } else {
-        localStorage.setItem('subscribedEmail', email);
-        setHasSubscribed(true);
-        toast({
-          title: "Successfully subscribed!",
-          description: "Thank you for subscribing to our newsletter.",
-        });
-        
-        // Send welcome email
-        await sendWelcomeEmail(email);
-        
-        setEmail('');
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || 'Subscription failed');
       }
+
+      // Store subscription status
+      localStorage.setItem('isSubscribed', 'true');
+      localStorage.setItem('subscribedEmail', email);
+      setIsSubscribed(true);
+
+      setEmail('');
+      toast({
+        title: "Subscription successful!",
+        description: "Thank you for subscribing to our newsletter.",
+      });
     } catch (error: any) {
+      console.error('Subscription error:', error);
       toast({
         title: "Error subscribing",
-        description: `Error: ${error?.message || 'Unknown error. Please try again later.'}`,
+        description: error?.message || 'Unknown error. Please try again later.',
         variant: "destructive",
       });
     } finally {
@@ -89,43 +67,37 @@ const FooterSubscribeForm: React.FC = () => {
     }
   };
 
-  if (hasSubscribed) {
+  if (isSubscribed) {
     return (
-      <div className="text-primary">
-        You're subscribed to our newsletter!
+      <div className="text-sm text-muted">
+        You're already subscribed with {localStorage.getItem('subscribedEmail')}
       </div>
     );
   }
 
   return (
-    <form onSubmit={handleSubscribe} className="flex gap-2 flex-col sm:flex-row">
-      <div className="flex-1">
+    <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-2">
+      <div className="flex-1 relative">
+        <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted h-4 w-4" />
         <Input
           type="email"
-          placeholder="Your email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
+          placeholder="Your email address"
+          className="pl-9 h-10"
           required
-          className="glass-card bg-transparent"
+          disabled={isSubmitting}
+          pattern="[^\\s@]+@[^\\s@]+\\.[^\\s@]+"
+          title="Please enter a valid email address"
         />
       </div>
       <Button 
         type="submit" 
-        size="sm" 
+        variant="secondary"
+        className="h-10" 
         disabled={isSubmitting}
-        className="glass-button"
       >
-        {isSubmitting ? (
-          <span className="flex items-center">
-            <svg className="animate-spin -ml-1 mr-2 h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-              <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-              <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-            </svg>
-            Subscribing...
-          </span>
-        ) : (
-          "Subscribe"
-        )}
+        {isSubmitting ? 'Subscribing...' : 'Subscribe'}
       </Button>
     </form>
   );
