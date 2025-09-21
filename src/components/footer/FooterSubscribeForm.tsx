@@ -87,7 +87,7 @@ const FooterSubscribeForm = () => {
           className="pl-9 h-10"
           required
           disabled={isSubmitting}
-          pattern="[^@\s]+@[^@\s]+\.[^@\s]+"
+          type="email"
           title="Please enter a valid email address"
         />
       </div>
