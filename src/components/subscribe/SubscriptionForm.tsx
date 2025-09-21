@@ -28,9 +28,15 @@ const SubscriptionForm = ({ onSubscriptionSuccess }: SubscriptionFormProps) => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
+    
+    // Debug log
+    console.log('API Config:', {
+      baseUrl: API_CONFIG.BASE_URL,
+      hasApiKey: !!API_CONFIG.API_KEY
+    });
 
     try {
-      const response = await fetch(`${API_CONFIG.BASE_URL}/subscribe`, {
+      const response = await fetch(`${API_CONFIG.BASE_URL}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -46,9 +52,16 @@ const SubscriptionForm = ({ onSubscriptionSuccess }: SubscriptionFormProps) => {
       });
 
       if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.error || 'Subscription failed');
+        console.error('API Response:', {
+          status: response.status,
+          statusText: response.statusText
+        });
+        const errorData = await response.json().catch(() => ({}));
+        throw new Error(errorData.error || `Subscription failed: ${response.statusText}`);
       }
+      
+      const responseData = await response.json();
+      console.log('Subscription success:', responseData);
 
       // Store subscription status
       localStorage.setItem('isSubscribed', 'true');
@@ -97,7 +110,7 @@ const SubscriptionForm = ({ onSubscriptionSuccess }: SubscriptionFormProps) => {
           className="pl-10 h-12 glass-card bg-transparent"
           required
           disabled={isSubmitting}
-          pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"
+          pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+[.][a-zA-Z]{2,}"
           title="Please enter a valid email address"
         />
       </div>
