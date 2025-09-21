@@ -2,7 +2,7 @@
 title: "Creating RAG AI-Agent Chat Bot for your website Part 2"
 summary: "A professional portfolio website with an AI-powered chatbot that can answer questions about your work, skills, and experience."
 date: "April 1, 2025"
-imageUrl: "https://eetbqplrrpfakagerrag.supabase.co/storage/v1/object/public/blog-images/Blog-2/First%20Full.jpeg"
+imageUrl: "https://sanath-blog-public-images.s3.eu-north-1.amazonaws.com/images/Blog-2/First+Full.jpeg"
 tags:
   - "RAG"
   - "AI"
@@ -45,7 +45,7 @@ Create a `.env` file in your project root:
 VITE_WEBHOOK_URL=your-n8n-production-webhook-url
 ```
 
-![GitHub Secrets Configuration for Webhook URL](https://eetbqplrrpfakagerrag.supabase.co/storage/v1/object/public/blog-images/Blog-2/Github%20Api.jpeg)
+![GitHub Secrets Configuration for Webhook URL](https://sanath-blog-public-images.s3.eu-north-1.amazonaws.com/images/Blog-2/Github+Api.jpeg)
 *Figure 2: GitHub Secrets Configuration for Webhook URL*
 
 #### 1.2 Set Up GitHub Secrets
@@ -54,7 +54,7 @@ VITE_WEBHOOK_URL=your-n8n-production-webhook-url
 3. Add `VITE_WEBHOOK_URL` with your n8n webhook URL
 
 ### 2. Building the Chat API Service
-![Chat windows in website](https://eetbqplrrpfakagerrag.supabase.co/storage/v1/object/public/blog-images/Blog-2/Chatwindow.jpeg)
+![Chat windows in website](https://sanath-blog-public-images.s3.eu-north-1.amazonaws.com/images/Blog-2/Chatwindow.jpeg)
 *Figure 3: Chat windows in website*
 
 #### 2.1 Create the API Service
@@ -258,7 +258,7 @@ function App() {
 
 ### 3. Testing Your Setup
 
-![Testing API Endpoint with Postman](https://eetbqplrrpfakagerrag.supabase.co/storage/v1/object/public/blog-images/Blog-2/Postman.jpeg)
+![Testing API Endpoint with Postman](https://sanath-blog-public-images.s3.eu-north-1.amazonaws.com/images/Blog-2/Postman.jpeg)
 *Figure 4: Testing API Endpoint with Postman*
 
 #### 3.1 Test the API Connection
@@ -269,7 +269,7 @@ curl -X POST \
   your-n8n-production-webhook-url
 ```
 
-![Browser testing](https://eetbqplrrpfakagerrag.supabase.co/storage/v1/object/public/blog-images/Blog-2/Browser%20Testing.jpeg)
+![Browser testing](https://sanath-blog-public-images.s3.eu-north-1.amazonaws.com/images/Blog-2/Browser+Testing.jpeg)
 *Figure 5: Browser testing*
 
 #### 3.2 Check Browser Console

@@ -2,7 +2,7 @@
 title: "Creating RAG AI-Agent Chat Bot for Your Website: Part 1"
 summary: "Seemsless integration of RAG model with your chatbot and decrease the work of interviewing many people where they can just ask questions about you directly here. Click here to see more"
 date: "April 1, 2025"
-imageUrl: "https://eetbqplrrpfakagerrag.supabase.co/storage/v1/object/public/blog-images/Blog-2/Blog%202%20-part%201/figure%201.jpeg"
+imageUrl: "https://sanath-blog-public-images.s3.eu-north-1.amazonaws.com/images/Blog-2/Blog+2+-part+1/figure+1.jpeg"
 tags:
   - "RAG"
   - "AI"
@@ -63,7 +63,7 @@ GOOGLE_DRIVE_CREDENTIALS=your_google_drive_credentials
 #### Testing with Chat Node
 First, we'll build a workflow with Chat Node for testing without webhook integration.
 
-![Chat Connected to RAG Agent](https://eetbqplrrpfakagerrag.supabase.co/storage/v1/object/public/blog-images/Blog-2/Blog%202%20-part%201/figure%202.jpeg)
+![Chat Connected to RAG Agent](https://sanath-blog-public-images.s3.eu-north-1.amazonaws.com/images/Blog-2/Blog+2+-part+1/figure+2.jpeg)
 *Figure 2: Chat Connected to RAG Agent*
 
 ### Step 2: Data Vectorization Workflow
@@ -71,7 +71,7 @@ First, we'll build a workflow with Chat Node for testing without webhook integra
 #### Creating Vector Storage
 We'll create a new workflow to convert our data to vectors using Supabase Vector Storage.
 
-![Converting Data to Vector and Needed Workflow](https://eetbqplrrpfakagerrag.supabase.co/storage/v1/object/public/blog-images/Blog-2/Blog%202%20-part%201/figure%203.jpeg)
+![Converting Data to Vector and Needed Workflow](https://sanath-blog-public-images.s3.eu-north-1.amazonaws.com/images/Blog-2/Blog+2+-part+1/figure+3.jpeg)
 *Figure 3: Converting Data to Vector and Needed Workflow*
 
 #### Workflow Configuration Steps
@@ -152,7 +152,7 @@ We'll create a new workflow to convert our data to vectors using Supabase Vector
 
 #### Replacing Chat Node with Webhook
 
-![Webhook Node Configuration](https://eetbqplrrpfakagerrag.supabase.co/storage/v1/object/public/blog-images/Blog-2/Blog%202%20-part%201/figure%204.jpeg)
+![Webhook Node Configuration](https://sanath-blog-public-images.s3.eu-north-1.amazonaws.com/images/Blog-2/Blog+2+-part+1/figure+4.jpeg)
 *Figure 4: Webhook Node Configuration*
 
 #### CORS Configuration
@@ -162,12 +162,12 @@ Configure origins (CORS) for proper access.
 
 #### Headers Configuration
 
-![Required Headers in Postman](https://eetbqplrrpfakagerrag.supabase.co/storage/v1/object/public/blog-images/Blog-2/Blog%202%20-part%201/figure%205.jpeg)
+![Required Headers in Postman](https://sanath-blog-public-images.s3.eu-north-1.amazonaws.com/images/Blog-2/Blog+2+-part+1/figure+5.jpeg)
 *Figure 5: Required Headers in Postman*
 
 #### Request Body Setup
 
-![Request Body Configuration](https://eetbqplrrpfakagerrag.supabase.co/storage/v1/object/public/blog-images/Blog-2/Blog%202%20-part%201/figure%206.jpeg)
+![Request Body Configuration](https://sanath-blog-public-images.s3.eu-north-1.amazonaws.com/images/Blog-2/Blog+2+-part+1/figure+6.jpeg)
 *Figure 6: Request Body Configuration*
 
 #### Testing Process
@@ -181,20 +181,20 @@ Configure origins (CORS) for proper access.
 
 #### Adding Field Nodes
 
-![AI-Agent Node with Field Nodes](https://eetbqplrrpfakagerrag.supabase.co/storage/v1/object/public/blog-images/Blog-2/Blog%202%20-part%201/figure%207.png)
+![AI-Agent Node with Field Nodes](https://sanath-blog-public-images.s3.eu-north-1.amazonaws.com/images/Blog-2/Blog+2+-part+1/figure+7.png)
 *Figure 7: AI-Agent Node with Field Nodes*
 
 #### System Message Configuration
 Add system message in AI agent options to define behavior.
 
-![AI-agent with system message](https://eetbqplrrpfakagerrag.supabase.co/storage/v1/object/public/blog-images/Blog-2/Blog%202%20-part%201/figure%208.jpeg)
+![AI-agent with system message](https://sanath-blog-public-images.s3.eu-north-1.amazonaws.com/images/Blog-2/Blog+2+-part+1/figure+8.jpeg)
 *Figure 8: AI-agent with system message*
 
 ### Step 7: Production Testing
 
 #### Final Testing
 
-![Production URL Testing Results](https://eetbqplrrpfakagerrag.supabase.co/storage/v1/object/public/blog-images/Blog-2/Blog%202%20-part%201/figure%209.jpeg)
+![Production URL Testing Results](https://sanath-blog-public-images.s3.eu-north-1.amazonaws.com/images/Blog-2/Blog+2+-part+1/figure+9.jpeg)
 *Figure 9: Production URL Testing Results*
 
 ## Troubleshooting

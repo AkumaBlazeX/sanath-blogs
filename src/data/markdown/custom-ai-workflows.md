@@ -2,7 +2,7 @@
 title: "Blog Automation Workflow for Gen-Z Creators"
 summary: "Time-Saving: Automate repetitive tasks like content generation and distribution."
 date: "March 29, 2025"
-imageUrl: "https://eetbqplrrpfakagerrag.supabase.co/storage/v1/object/public/blog-images//image.jpeg"
+imageUrl: "https://sanath-blog-public-images.s3.eu-north-1.amazonaws.com/images/First-blog/WhatsApp+Image+2025-03-29+at+9.14.21+AM.jpeg"
 tags:
   - "Automation"
   - "AI"
@@ -57,7 +57,7 @@ Refer to these resources for guidance:
 
 In order to get the best output, refer to this sample image that illustrates how the content is structured:
 
-![Prompt Example](https://eetbqplrrpfakagerrag.supabase.co/storage/v1/object/public/blog-images//image.jpeg)
+![Prompt Example](https://sanath-blog-public-images.s3.eu-north-1.amazonaws.com/images/First-blog/image.jpeg)
 
 ### 3. Edit Your Content
 
@@ -75,7 +75,7 @@ In order to get the best output, refer to this sample image that illustrates how
 **What it does**: Sends a Slack message when the blog is ready.
 **How can we achieve this:** Follow the [Slack setup guide](https://docs.n8n.io/integrations/builtin/credentials/slack/) for steps to create a channel, app, OAuth ID, and scopes to connect Slack with n8n.
 
-![Slack Example](https://eetbqplrrpfakagerrag.supabase.co/storage/v1/object/public/blog-images/Blog-2/Slack.jpeg)
+![Slack Example](https://sanath-blog-public-images.s3.eu-north-1.amazonaws.com/images/First-blog/Slack.jpeg)
 
 ### 6. Organize in Notion
 
