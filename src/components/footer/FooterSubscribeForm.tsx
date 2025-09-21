@@ -25,7 +25,7 @@ const FooterSubscribeForm = () => {
     setIsSubmitting(true);
 
     try {
-      const response = await fetch(`${API_CONFIG.BASE_URL}/subscribe`, {
+      const response = await fetch(`${API_CONFIG.BASE_URL}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -87,7 +87,7 @@ const FooterSubscribeForm = () => {
           className="pl-9 h-10"
           required
           disabled={isSubmitting}
-          pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"
+          pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+[.][a-zA-Z]{2,}"
           title="Please enter a valid email address"
         />
       </div>
