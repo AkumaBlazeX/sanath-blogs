@@ -110,7 +110,7 @@ const SubscriptionForm = ({ onSubscriptionSuccess }: SubscriptionFormProps) => {
           className="pl-10 h-12 glass-card bg-transparent"
           required
           disabled={isSubmitting}
-          pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+[.][a-zA-Z]{2,}"
+          pattern="[^@\s]+@[^@\s]+\.[^@\s]+"
           title="Please enter a valid email address"
         />
       </div>
