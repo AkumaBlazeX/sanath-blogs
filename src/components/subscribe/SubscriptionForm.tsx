@@ -1,64 +1,89 @@
-
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Mail, ArrowRight } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { supabase } from '@/integrations/supabase/client';
+import { API_CONFIG } from '@/config/api';
 
 interface SubscriptionFormProps {
-  onSubscriptionSuccess: (email: string) => void;
+  onSubscriptionSuccess?: (email: string) => void;
 }
 
 const SubscriptionForm = ({ onSubscriptionSuccess }: SubscriptionFormProps) => {
   const { toast } = useToast();
   const [email, setEmail] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSubscribed, setIsSubscribed] = useState(false);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setEmail(e.target.value);
-  };
+  // Check subscription status on mount
+  useEffect(() => {
+    const subscribed = localStorage.getItem('isSubscribed') === 'true';
+    const savedEmail = localStorage.getItem('subscribedEmail');
+    if (subscribed && savedEmail) {
+      setIsSubscribed(true);
+      setEmail(savedEmail);
+    }
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
 
     try {
-      // Store the subscription in Supabase
-      const { error } = await supabase
-        .from('subscriptions')
-        .insert([{ email }]);
+      const response = await fetch(`${API_CONFIG.BASE_URL}/subscribe`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-api-key': API_CONFIG.API_KEY
+        },
+        body: JSON.stringify({
+          template: 'WelcomeEmail',
+          singleEmail: email,
+          data: {
+            blogName: "Sanath's Blog"
+          }
+        })
+      });
 
-      if (error) {
-        if (error.code === '23505') { // Unique constraint violation
-          toast({
-            title: "Already subscribed",
-            description: "This email is already subscribed to our newsletter.",
-          });
-          // Still consider this a success since the email is subscribed
-          onSubscriptionSuccess(email);
-        } else {
-          throw error;
-        }
-      } else {
-        setEmail('');
-        onSubscriptionSuccess(email);
-        toast({
-          title: "Subscription successful!",
-          description: "Thank you for subscribing to our newsletter.",
-        });
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || 'Subscription failed');
       }
+
+      // Store subscription status
+      localStorage.setItem('isSubscribed', 'true');
+      localStorage.setItem('subscribedEmail', email);
+      setIsSubscribed(true);
+
+      // Clear form and show success
+      setEmail('');
+      onSubscriptionSuccess?.(email);
+      
+      toast({
+        title: "Subscription successful!",
+        description: "Thank you for subscribing to our newsletter.",
+      });
     } catch (error: any) {
       console.error('Subscription error:', error);
       toast({
         title: "Error subscribing",
-        description: `Error: ${error?.message || 'Unknown error. Please try again later.'}`,
+        description: error?.message || 'Unknown error. Please try again later.',
         variant: "destructive",
       });
     } finally {
       setIsSubmitting(false);
     }
   };
+
+  if (isSubscribed) {
+    return (
+      <div className="text-center p-4 bg-muted/50 rounded-lg">
+        <p className="text-sm text-muted-foreground">
+          You're already subscribed with {localStorage.getItem('subscribedEmail')}
+        </p>
+      </div>
+    );
+  }
 
   return (
     <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-3 max-w-xl mx-auto">
@@ -67,10 +92,13 @@ const SubscriptionForm = ({ onSubscriptionSuccess }: SubscriptionFormProps) => {
         <Input
           type="email"
           value={email}
-          onChange={handleChange}
+          onChange={(e) => setEmail(e.target.value)}
           placeholder="Your email address"
           className="pl-10 h-12 glass-card bg-transparent"
           required
+          disabled={isSubmitting}
+          pattern="[^\\s@]+@[^\\s@]+\\.[^\\s@]+"
+          title="Please enter a valid email address"
         />
       </div>
       <Button 
