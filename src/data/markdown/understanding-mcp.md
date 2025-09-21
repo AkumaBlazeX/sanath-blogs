@@ -2,7 +2,7 @@
 title: "Understanding MCP (Model Context Protocol)"
 summary: "A new term that's been gaining attention in the AI world is MCP – Model Context Protocol. To understand MCP and its significance, let's first take a quick journey through the evolution of LLMs and how we interact with them today."
 date: "April 5, 2024"
-imageUrl: "https://eetbqplrrpfakagerrag.supabase.co/storage/v1/object/public/blog-images/MCP-Blog-Images/Title.png"
+imageUrl: "https://sanath-blog-public-images.s3.eu-north-1.amazonaws.com/images/MCP-Blog-Images/Title.png"
 tags:
   - "MCP"
   - "Model Context Protocol"
@@ -31,7 +31,7 @@ A new term that's been gaining attention in the AI world is **MCP** – **Model 
 
 The first big revolution came with the introduction of **LLMs** – large models trained on massive datasets, giving them what we can imagine as a "big head full of past data". These models are excellent at understanding and generating human-like text.
 
-![An illustration showing the concept of a large model with vast past knowledge](https://eetbqplrrpfakagerrag.supabase.co/storage/v1/object/public/blog-images/MCP-Blog-Images/First.png)
+![An illustration showing the concept of a large model with vast past knowledge](https://sanath-blog-public-images.s3.eu-north-1.amazonaws.com/images/MCP-Blog-Images/First.png)
 
 ## 2. RAG Models: Enhancing LLMs
 
@@ -53,7 +53,7 @@ However, there were two major limitations for non-technical users:
     
 2. **Lack of Adaptability**: If the task changes, the workflow is often not reusable.
 
-![A workflow showing manual configuration in n8n](https://eetbqplrrpfakagerrag.supabase.co/storage/v1/object/public/blog-images/MCP-Blog-Images/Second.jpeg)
+![A workflow showing manual configuration in n8n](https://sanath-blog-public-images.s3.eu-north-1.amazonaws.com/images/MCP-Blog-Images/Second.jpeg)
 
 ## 4. Enter MCP: The Missing Link
 
@@ -61,7 +61,7 @@ This is where **MCP (Model Context Protocol)** comes in.
 
 MCP acts as a **broker between LLMs and tools**, making it easier for the model to know **what to do** and **how to do it**, **without you needing to explicitly define every detail**.
 
-![Architecture of MCP: Tools at the bottom, MCP Server in the middle, and MCP Clients on top](https://eetbqplrrpfakagerrag.supabase.co/storage/v1/object/public/blog-images/MCP-Blog-Images/Third.png)
+![Architecture of MCP: Tools at the bottom, MCP Server in the middle, and MCP Clients on top](https://sanath-blog-public-images.s3.eu-north-1.amazonaws.com/images/MCP-Blog-Images/Third.png)
 (Source: [Norah Sakal's Blog on MCP](https://norahsakal.com/blog/mcp-vs-api-model-context-protocol-explained/))
 
 ### Before MCP:
@@ -87,13 +87,13 @@ Let's build a simple **MCP server** using **Cursor AI** and **Zapier MCP**.
     
 3. In your Cursor settings, you'll see your connected MCP (like the image below).
 
-![Zapier MCP connected to Cursor](https://eetbqplrrpfakagerrag.supabase.co/storage/v1/object/public/blog-images/MCP-Blog-Images/Fourth.jpeg)
+![Zapier MCP connected to Cursor](https://sanath-blog-public-images.s3.eu-north-1.amazonaws.com/images/MCP-Blog-Images/Fourth.jpeg)
 
 ## 6. Adding Actions via Zapier
 
 Next, you can start adding **actions**. For example, connect your Gmail.
 
-![Gmail added as an action in Zapier](https://eetbqplrrpfakagerrag.supabase.co/storage/v1/object/public/blog-images/MCP-Blog-Images/Fifth.jpeg)
+![Gmail added as an action in Zapier](https://sanath-blog-public-images.s3.eu-north-1.amazonaws.com/images/MCP-Blog-Images/Fifth.jpeg)
 
 Now, inside any Cursor project, you can use natural language like:
 
@@ -101,11 +101,11 @@ Now, inside any Cursor project, you can use natural language like:
 
 And it will send the email using the pre-defined action.
 
-![A test example in Cursor where an email was sent just by using natural language](https://eetbqplrrpfakagerrag.supabase.co/storage/v1/object/public/blog-images/MCP-Blog-Images/Sixth.jpeg)
+![A test example in Cursor where an email was sent just by using natural language](https://sanath-blog-public-images.s3.eu-north-1.amazonaws.com/images/MCP-Blog-Images/Sixth.jpeg)
 
 ## 7. Final Output
 
-![Screenshot of the email received as a meeting reminder – triggered by MCP through Cursor](https://eetbqplrrpfakagerrag.supabase.co/storage/v1/object/public/blog-images/MCP-Blog-Images/Seventh.jpeg)
+![Screenshot of the email received as a meeting reminder – triggered by MCP through Cursor](https://sanath-blog-public-images.s3.eu-north-1.amazonaws.com/images/MCP-Blog-Images/Seventh.jpeg)
 
 ## Conclusion
 
