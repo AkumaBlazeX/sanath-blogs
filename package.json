@@ -10,7 +10,7 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "update-blog": "node src/scripts/updateBlogPosts.js",
-    "update-sitemap": "node scripts/updateSitemap.ts",
+    "update-sitemap": "node scripts/updateSitemap.js",
     "update-all": "npm run update-blog && npm run update-sitemap"
   },
   "dependencies": {
