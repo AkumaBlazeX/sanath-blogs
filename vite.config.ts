@@ -27,39 +27,30 @@ export default defineConfig(({ mode }) => ({
     componentTagger(),
     copyMarkdownFiles()
   ].filter(Boolean),
-  base: './',
+  base: '/',
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
     },
   },
-  build: {
-    outDir: 'dist',
-    assetsDir: 'assets',
-    sourcemap: true,
-    rollupOptions: {
-      output: {
-        manualChunks: {
-          'react-vendor': ['react', 'react-dom', 'react-router-dom'],
-          'ui-vendor': ['lucide-react', '@radix-ui/react-slot'],
-          'markdown-vendor': ['react-markdown', 'remark-gfm'],
-          'utils-vendor': ['clsx', 'tailwind-merge'],
+    build: {
+      outDir: 'dist',
+      assetsDir: 'assets',
+      sourcemap: true,
+      rollupOptions: {
+        input: {
+          main: path.resolve(__dirname, 'index.html'),
         },
-        assetFileNames: (assetInfo) => {
-          if (!assetInfo.name) return 'assets/[name][extname]';
-          const extType = assetInfo.name.split('.').pop() || '';
-          if (/png|jpe?g|svg|gif|tiff|bmp|ico/i.test(extType)) {
-            return `assets/img/[name][extname]`;
-          }
-          if (extType === 'css') {
-            return `assets/css/index.css`;
-          }
-          return `assets/${extType}/[name][extname]`;
+        output: {
+          manualChunks: {
+            'vendor': ['react', 'react-dom', 'react-router-dom'],
+            'ui': ['lucide-react', '@radix-ui/react-slot'],
+          },
+          entryFileNames: 'assets/[name].js',
+          chunkFileNames: 'assets/[name].js',
+          assetFileNames: 'assets/[name].[ext]'
         },
-        chunkFileNames: 'assets/js/[name]-[hash].js',
-        entryFileNames: 'assets/js/[name]-[hash].js',
       },
-    },
     chunkSizeWarningLimit: 500,
     minify: 'terser',
     terserOptions: {
