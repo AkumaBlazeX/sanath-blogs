@@ -25,7 +25,7 @@ const App = () => (
   <QueryClientProvider client={queryClient}>
     <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
       <TooltipProvider>
-        <BrowserRouter>
+        <BrowserRouter> {/* <-- Corrected */}
           <Favicon />
           <Helmet>
             <title>Sanath Blogs - Data Science & AI Automation Insights</title>
@@ -51,7 +51,7 @@ const App = () => (
               </Suspense>
             </AnimatePresence>
           </Layout>
-        </HashRouter>
+        </BrowserRouter> {/* <-- Fixed closing tag */}
       </TooltipProvider>
     </ThemeProvider>
   </QueryClientProvider>
