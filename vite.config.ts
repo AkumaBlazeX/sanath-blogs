@@ -48,7 +48,14 @@ export default defineConfig(({ mode }) => ({
           },
           entryFileNames: 'assets/[name].js',
           chunkFileNames: 'assets/[name].js',
-          assetFileNames: 'assets/[name].[ext]'
+          assetFileNames: (assetInfo) => {
+            if (!assetInfo.name) return 'assets/[name].[ext]';
+            const extType = assetInfo.name.split('.').pop() || '';
+            if (extType === 'css') {
+              return 'assets/main.css';
+            }
+            return 'assets/[name].[ext]';
+          }
         },
       },
     chunkSizeWarningLimit: 500,
