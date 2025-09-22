@@ -10,7 +10,8 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "update-blog": "node src/scripts/updateBlogPosts.js",
-    "update-rss": "node src/scripts/updateBlogPosts.js"
+    "update-sitemap": "node scripts/updateSitemap.ts",
+    "update-all": "npm run update-blog && npm run update-sitemap"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.0",
