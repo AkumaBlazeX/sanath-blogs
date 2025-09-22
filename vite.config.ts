@@ -27,7 +27,7 @@ export default defineConfig(({ mode }) => ({
     componentTagger(),
     copyMarkdownFiles()
   ].filter(Boolean),
-  base: '/',
+  base: '',
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
