@@ -27,7 +27,7 @@ export default defineConfig(({ mode }) => ({
     componentTagger(),
     copyMarkdownFiles()
   ].filter(Boolean),
-  base: '/',
+  base: './',
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
@@ -46,15 +46,15 @@ export default defineConfig(({ mode }) => ({
           'utils-vendor': ['clsx', 'tailwind-merge'],
         },
         assetFileNames: (assetInfo) => {
-          if (!assetInfo.name) return 'assets/[name]-[hash][extname]';
+          if (!assetInfo.name) return 'assets/[name][extname]';
           const extType = assetInfo.name.split('.').pop() || '';
           if (/png|jpe?g|svg|gif|tiff|bmp|ico/i.test(extType)) {
-            return `assets/img/[name]-[hash][extname]`;
+            return `assets/img/[name][extname]`;
           }
           if (extType === 'css') {
-            return `assets/css/[name]-[hash][extname]`;
+            return `assets/css/index.css`;
           }
-          return `assets/${extType}/[name]-[hash][extname]`;
+          return `assets/${extType}/[name][extname]`;
         },
         chunkFileNames: 'assets/js/[name]-[hash].js',
         entryFileNames: 'assets/js/[name]-[hash].js',
