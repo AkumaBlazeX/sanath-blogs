@@ -1,74 +1,53 @@
-import { defineConfig } from "vite";
-import react from "@vitejs/plugin-react-swc";
-import path from "path";
-import { componentTagger } from "lovable-tagger";
-import fs from 'fs-extra';
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sanath's Blog - Data Science & AI Automation Insights</title>
+    <meta name="description" content="Expert insights on Data Science, AI automation, and machine learning by Sanath. Discover practical guides and tutorials on automation workflows." />
+    <meta name="author" content="Sanath Kumar P V" />
+    <link rel="canonical" href="https://www.sanathblogs.site" />
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://www.sanathblogs.site" />
+    <meta property="og:title" content="Sanath's Blog - Data Science & AI Automation Insights" />
+    <meta property="og:description" content="Expert insights on Data Science, AI automation, and machine learning by Sanath. Discover practical guides and tutorials on automation workflows." />
+    <meta property="og:image" content="https://eetbqplrrpfakagerrag.supabase.co/storage/v1/object/public/blog-images//WhatsApp%20Image%202025-03-29%20at%209.14.21%20AM.jpeg" />
 
-// Copy markdown files to public directory
-const copyMarkdownFiles = () => ({
-  name: 'copy-markdown-files',
-  buildStart() {
-    const srcDir = path.resolve(__dirname, 'src/data/markdown');
-    const destDir = path.resolve(__dirname, 'public/data/markdown');
-    fs.ensureDirSync(destDir);
-    fs.copySync(srcDir, destDir);
-  }
-});
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content="https://www.sanathblogs.site" />
+    <meta name="twitter:title" content="Sanath's Blog - Data Science & AI Automation Insights" />
+    <meta name="twitter:description" content="Expert insights on Data Science, AI automation, and machine learning by Sanath. Discover practical guides and tutorials on automation workflows." />
+    <meta name="twitter:image" content="https://eetbqplrrpfakagerrag.supabase.co/storage/v1/object/public/blog-images//WhatsApp%20Image%202025-03-29%20at%209.14.21%20AM.jpeg" />
 
-// https://vitejs.dev/config/
-export default defineConfig(({ mode }) => ({
-  server: {
-    host: "::",
-    port: 8080,
-  },
-  plugins: [
-    react(),
-    mode === 'development' &&
-    componentTagger(),
-    copyMarkdownFiles()
-  ].filter(Boolean),
-  base: './',
-  resolve: {
-    alias: {
-      "@": path.resolve(__dirname, "./src"),
-    },
-  },
-  build: {
-    outDir: 'dist',
-    assetsDir: 'assets',
-    sourcemap: true,
-    rollupOptions: {
-      output: {
-        manualChunks: {
-          'react-vendor': ['react', 'react-dom', 'react-router-dom'],
-          'ui-vendor': ['lucide-react', '@radix-ui/react-slot'],
-          'markdown-vendor': ['react-markdown', 'remark-gfm'],
-          'utils-vendor': ['clsx', 'tailwind-merge'],
-        },
-        assetFileNames: (assetInfo) => {
-          if (!assetInfo.name) return 'assets/[name][extname]';
-          const extType = assetInfo.name.split('.').pop() || '';
-          if (/png|jpe?g|svg|gif|tiff|bmp|ico/i.test(extType)) {
-            return `assets/img/[name][extname]`;
-          }
-          if (extType === 'css') {
-            return `assets/css/index.css`;
-          }
-          return `assets/${extType}/[name][extname]`;
-        },
-        chunkFileNames: 'assets/js/[name]-[hash].js',
-        entryFileNames: 'assets/js/[name]-[hash].js',
-      },
-    },
-    chunkSizeWarningLimit: 500,
-    minify: 'terser',
-    terserOptions: {
-      compress: {
-        drop_console: true,
-        drop_debugger: true
-      }
-    }
-  },
-  publicDir: 'public',
-  assetsInclude: ['**/*.md']
-}));
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="./favicon.png" />
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="./assets/css/index.css">
+    <!-- Start Single Page Apps for GitHub Pages -->
+    <script type="text/javascript">
+      // Single Page Apps for GitHub Pages
+      // MIT License
+      // https://github.com/rafgraph/spa-github-pages
+      (function(l) {
+        if (l.search[1] === 'p') {
+          var decoded = l.search.slice(1).split('&').map(function(s) {
+            return s.replace(/~and~/g, '&')
+          }).join('?');
+          window.history.replaceState(null, null,
+            l.pathname.slice(0, -1) + (decoded.length > 0 ? '?' + decoded : '') +
+            l.hash
+          );
+        }
+      }(window.location))
+    </script>
+    <!-- End Single Page Apps for GitHub Pages -->
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
