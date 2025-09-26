@@ -43,10 +43,10 @@ const SubscriptionForm = ({ onSubscriptionSuccess }: SubscriptionFormProps) => {
           'x-api-key': API_CONFIG.API_KEY
         },
         body: JSON.stringify({
-          template: 'WelcomeEmail',
+          template: 'WelcomeNewsletter',
           singleEmail: email,
           data: {
-            blogName: "Sanath's Blog"
+            name: email.split('@')[0] // Use email prefix as name
           }
         })
       });
