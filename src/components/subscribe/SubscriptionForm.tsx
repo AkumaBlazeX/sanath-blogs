@@ -68,8 +68,7 @@ const SubscriptionForm = ({ onSubscriptionSuccess }: SubscriptionFormProps) => {
       localStorage.setItem('subscribedEmail', email);
       setIsSubscribed(true);
 
-      // Clear form and show success
-      setEmail('');
+      // Notify parent component of success
       onSubscriptionSuccess?.(email);
       
       toast({
