@@ -26,9 +26,6 @@ Welcome to Part 3 of our series! With authentication in place, let's build the c
 
 First, let's design our DynamoDB table structure:
 
-[SCREENSHOT 1: Show DynamoDB table design in AWS Console]
-Caption: "Creating the Posts table in DynamoDB"
-
 ```typescript
 // Example Post Item Structure
 {
@@ -45,20 +42,12 @@ Caption: "Creating the Posts table in DynamoDB"
 
 Let's create our table with the right indexes:
 
-[SCREENSHOT 2: Show DynamoDB indexes configuration]
-Caption: "Configuring DynamoDB indexes for efficient queries"
-
 ## Creating Lambda Functions
 
 We'll need several Lambda functions to handle different operations:
 
-[SCREENSHOT 3: Show Lambda functions list in AWS Console]
-Caption: "Lambda functions for post management"
 
 ### Create Post Function
-
-[SCREENSHOT 4: Show Lambda function code in AWS Console]
-Caption: "Implementation of create-post Lambda function"
 
 ```typescript
 // functions/create-post.ts
@@ -69,9 +58,6 @@ import { v4 as uuidv4 } from 'uuid';
 ```
 
 ### Get Feed Function
-
-[SCREENSHOT 5: Show feed query implementation]
-Caption: "Implementing efficient feed queries with DynamoDB"
 
 ```typescript
 // functions/get-feed.ts
@@ -84,15 +70,9 @@ import { DynamoDB } from 'aws-sdk';
 
 Now let's create our API endpoints:
 
-[SCREENSHOT 6: Show API Gateway configuration]
-Caption: "API Gateway endpoints for post management"
-
 ## Image Upload to S3
 
 Let's implement secure image uploads:
-
-[SCREENSHOT 7: Show S3 bucket configuration]
-Caption: "Configuring S3 bucket for post images"
 
 ```typescript
 // src/utils/imageUpload.ts
@@ -105,9 +85,6 @@ import { S3 } from 'aws-sdk';
 
 ### Post Creation Component
 
-[SCREENSHOT 8: Show post creation UI]
-Caption: "Post creation form with image upload"
-
 ```typescript
 // src/components/CreatePost.tsx
 import { useState } from 'react';
@@ -117,9 +94,6 @@ import { useAuth } from '../context/AuthContext';
 ```
 
 ### Feed Component
-
-[SCREENSHOT 9: Show feed implementation]
-Caption: "Social feed with infinite scroll"
 
 ```typescript
 // src/components/Feed.tsx
@@ -133,9 +107,6 @@ import { Post } from '../types';
 
 Let's add smooth infinite scrolling:
 
-[SCREENSHOT 10: Show infinite scroll in action]
-Caption: "Infinite scroll implementation in the feed"
-
 ```typescript
 // src/hooks/useInfiniteScroll.ts
 import { useInView } from 'react-intersection-observer';
@@ -147,9 +118,6 @@ import { useInView } from 'react-intersection-observer';
 
 ### Image Compression
 
-[SCREENSHOT 11: Show image compression implementation]
-Caption: "Client-side image compression before upload"
-
 ```typescript
 // src/utils/imageCompression.ts
 import imageCompression from 'browser-image-compression';
@@ -159,15 +127,10 @@ import imageCompression from 'browser-image-compression';
 
 ### Query Optimization
 
-[SCREENSHOT 12: Show DynamoDB performance metrics]
-Caption: "DynamoDB query performance monitoring"
-
 ## Testing the Feed System
 
 Let's verify our implementation:
-
-[SCREENSHOT 13: Show the complete feed system]
-Caption: "Final implementation of post creation and feed"
+Create a new post, so you can see your feeds.
 
 ## What's Next?
 
