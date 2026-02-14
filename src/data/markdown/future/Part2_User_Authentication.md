@@ -30,9 +30,6 @@ First, let's create our User Pool in Amazon Cognito. This will serve as our user
 
 Navigate to the Amazon Cognito console and follow these steps:
 
-[SCREENSHOT 1: Show the Cognito console with "Create user pool" button highlighted]
-Caption: "Creating a new User Pool in Amazon Cognito console"
-
 1. Click "Create user pool"
 2. Choose "Email" as the sign-in option
 3. Configure security requirements:
@@ -40,15 +37,10 @@ Caption: "Creating a new User Pool in Amazon Cognito console"
    - Require numbers and special characters
    - Enable self-service account recovery
 
-[SCREENSHOT 2: Show the user pool configuration settings]
-Caption: "Configuring User Pool security settings"
 
 ### Configuring App Integration
 
 Now we'll set up our application client to communicate with Cognito:
-
-[SCREENSHOT 3: Show the "App client settings" page]
-Caption: "Setting up the App client in Cognito"
 
 ```typescript
 // src/config/cognito.ts
@@ -65,9 +57,6 @@ Let's create our authentication context and components.
 
 ### Authentication Context
 
-[SCREENSHOT 4: Show the React code implementation in VS Code]
-Caption: "Implementing the Authentication Context in React"
-
 ```typescript
 // src/context/AuthContext.tsx
 import { createContext, useContext, useState, useEffect } from 'react';
@@ -81,9 +70,6 @@ import { cognitoConfig } from '../config/cognito';
 
 Here's how we'll implement the sign-up process:
 
-[SCREENSHOT 5: Show the signup form UI]
-Caption: "User registration form with email verification"
-
 ```typescript
 // src/pages/SignUp.tsx
 import { useState } from 'react';
@@ -95,9 +81,6 @@ import { useAuth } from '../context/AuthContext';
 ### Email Verification
 
 After signup, users need to verify their email:
-
-[SCREENSHOT 6: Show the verification UI]
-Caption: "Email verification code input screen"
 
 ```typescript
 // src/pages/VerifyEmail.tsx
@@ -111,9 +94,6 @@ import { useAuth } from '../context/AuthContext';
 
 Let's create a secure login form:
 
-[SCREENSHOT 7: Show the login form UI]
-Caption: "Secure login form with error handling"
-
 ```typescript
 // src/pages/Login.tsx
 import { useState } from 'react';
@@ -126,8 +106,6 @@ import { useAuth } from '../context/AuthContext';
 
 We need to ensure certain routes are only accessible to authenticated users:
 
-[SCREENSHOT 8: Show the protected routes implementation]
-Caption: "Implementing protected routes in React"
 
 ```typescript
 // src/components/ProtectedRoute.tsx
@@ -141,11 +119,6 @@ import { useAuth } from '../context/AuthContext';
 
 Let's test our implementation:
 
-[SCREENSHOT 9: Show successful registration]
-Caption: "Successful user registration flow"
-
-[SCREENSHOT 10: Show successful login]
-Caption: "Successful login and protected route access"
 
 ## Security Best Practices
 
@@ -158,8 +131,6 @@ Here are some key security considerations we've implemented:
 5. Protected routes
 6. Error handling
 
-[SCREENSHOT 11: Show security settings in Cognito]
-Caption: "Security configuration in Amazon Cognito"
 
 ## What's Next?
 
